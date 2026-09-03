@@ -121,6 +121,7 @@ const PPSC_AUTH = {
   },
 
   updateUI() {
+    if (typeof document === 'undefined') return;
     const headerChip = document.getElementById('proStatusChip');
     if (headerChip) {
       if (this.state.isPro) {
@@ -224,4 +225,8 @@ if (typeof document !== 'undefined') {
   document.addEventListener('DOMContentLoaded', () => {
     PPSC_AUTH.init();
   });
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { PPSC_AUTH };
 }

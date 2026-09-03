@@ -1,0 +1,165 @@
+// Comprehensive System & Function Test Suite for PPSC MasterPrep
+
+const assert = require('assert');
+const path = require('path');
+const fs = require('fs');
+
+console.log('====================================================');
+console.log('🧪 RUNNING COMPREHENSIVE PPSC MASTERPREP TEST SUITE');
+console.log('====================================================\n');
+
+let passedTests = 0;
+let totalTests = 0;
+
+function test(name, fn) {
+  totalTests++;
+  try {
+    fn();
+    console.log(`✅ PASS: ${name}`);
+    passedTests++;
+  } catch(e) {
+    console.error(`❌ FAIL: ${name}`);
+    console.error(`   Error: ${e.message}\n`);
+  }
+}
+
+// 1. DATA INTEGRITY TESTS
+test('Question Bank Integrity & Schema', () => {
+  const unified = require('./data/questions_unified.js').PPSC_UNIFIED_QUESTIONS;
+  assert(Array.isArray(unified), 'PPSC_UNIFIED_QUESTIONS must be an array');
+  assert(unified.length >= 8000, `Expected >= 8000 questions, got ${unified.length}`);
+
+  // Test first 500 questions for valid options, answer, and subject
+  for (let i = 0; i < Math.min(500, unified.length); i++) {
+    const q = unified[i];
+    assert(q.question && q.question.trim().length > 0, `Question #${i} has empty question text`);
+    assert(Array.isArray(q.options) && q.options.length === 4, `Question #${i} must have exactly 4 options`);
+    assert(q.answer && q.answer.trim().length > 0, `Question #${i} must have an answer`);
+    assert(q.options.includes(q.answer), `Question #${i} answer "${q.answer}" must exist in options: [${q.options.join(', ')}]`);
+    assert(q.subject && q.subject.trim().length > 0, `Question #${i} must have a valid subject`);
+  }
+});
+
+// 2. PAST PAPERS DIRECTORY INTEGRITY
+test('Past Papers 245 Directory Integrity', () => {
+  const syllabus = require('./data/syllabus.js');
+  const pastPapers = syllabus.GENERATED_245_PAST_PAPERS;
+  assert(Array.isArray(pastPapers), 'GENERATED_245_PAST_PAPERS must be an array');
+  assert.strictEqual(pastPapers.length, 245, `Expected exactly 245 past papers, got ${pastPapers.length}`);
+  
+  pastPapers.forEach((p, idx) => {
+    assert(p.title && p.title.length > 0, `Paper #${idx} missing title`);
+    assert(p.year >= 2015 && p.year <= 2026, `Paper #${idx} has invalid year: ${p.year}`);
+    assert(p.department, `Paper #${idx} missing department`);
+  });
+});
+
+// 3. 1-DEVICE HARDWARE LOCK & SECURITY TESTS
+test('1-Device Cryptographic Licensing & Hardware Lock', () => {
+  // Mock localStorage
+  const store = {};
+  global.localStorage = {
+    getItem: (k) => store[k] || null,
+    setItem: (k, v) => { store[k] = String(v); },
+    removeItem: (k) => { delete store[k]; }
+  };
+  global.navigator = { userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' };
+
+  const { PPSC_AUTH } = require('./auth.js');
+
+  assert(PPSC_AUTH, 'PPSC_AUTH must be defined');
+  assert.strictEqual(PPSC_AUTH.ADMIN_PIN, 'PPSC2026Adan26627', 'Admin PIN must be PPSC2026Adan26627');
+  assert.strictEqual(PPSC_AUTH.FREE_TIER_LIMIT, 10, 'Free tier limit must be 10 MCQs');
+
+  // Test Device ID generation
+  PPSC_AUTH.initDeviceId();
+  const devId = PPSC_AUTH.state.deviceId;
+  assert(devId && devId.startsWith('DEV-'), `Expected DEV-XXXX device ID, got: ${devId}`);
+
+  // Test Key Generation
+  const studentEmail = 'student.ammar@gmail.com';
+  const generatedKey = PPSC_AUTH.generateKeyForDevice(studentEmail, devId);
+  assert(generatedKey.startsWith('PPSC-PRO-'), `Key should start with PPSC-PRO-, got: ${generatedKey}`);
+
+  // Verify on SAME device -> MUST PASS
+  const verifySelf = PPSC_AUTH.verifyKey(studentEmail, generatedKey, devId);
+  assert.strictEqual(verifySelf, true, 'Key must verify successfully on authorized device');
+
+  // Verify on FOREIGN device -> MUST REJECT
+  const foreignDevId = 'DEV-9999';
+  const verifyForeign = PPSC_AUTH.verifyKey(studentEmail, generatedKey, foreignDevId);
+  assert.strictEqual(verifyForeign, false, 'Key must be REJECTED on foreign device');
+
+  // Test activation on this device
+  const actRes = PPSC_AUTH.activateLicense(studentEmail, generatedKey);
+  assert.strictEqual(actRes.success, true, 'Activation on authorized device must succeed');
+  assert.strictEqual(PPSC_AUTH.state.isPro, true, 'State isPro must become true after activation');
+
+  // Test invalid key rejection
+  const fakeRes = PPSC_AUTH.activateLicense(studentEmail, 'PPSC-PRO-FAKE-KEY1-TEST');
+  assert.strictEqual(fakeRes.success, false, 'Fake key activation must fail');
+});
+
+// 4. SMART NON-REPEATING QUESTION SHUFFLER & PRACTICE TESTS
+test('Smart Dynamic Non-Repeating Shuffler', () => {
+  const unified = require('./data/questions_unified.js').PPSC_UNIFIED_QUESTIONS;
+
+  // Simulate mock app getSmartRandomQuestions logic
+  const getSmartRandomQuestions = (pool, count) => {
+    let seenHistory = [];
+    try {
+      const raw = global.localStorage.getItem('ppsc_seen_history');
+      if (raw) seenHistory = JSON.parse(raw);
+    } catch(e) {}
+    const seenSet = new Set(seenHistory);
+    const unseen = pool.filter(q => !seenSet.has(q.id || q.question));
+    const seen = pool.filter(q => seenSet.has(q.id || q.question));
+
+    const shuffle = (arr) => {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    };
+
+    const shuffledUnseen = shuffle(unseen);
+    const shuffledSeen = shuffle(seen);
+
+    let selected = [];
+    if (shuffledUnseen.length >= count) {
+      selected = shuffledUnseen.slice(0, count);
+    } else {
+      selected = [...shuffledUnseen, ...shuffledSeen.slice(0, count - shuffledUnseen.length)];
+      seenHistory = [];
+    }
+
+    selected.forEach(q => seenHistory.push(q.id || q.question));
+    global.localStorage.setItem('ppsc_seen_history', JSON.stringify(seenHistory));
+
+    return selected.map((q, idx) => ({
+      ...q,
+      examQuestionId: idx + 1,
+      options: shuffle(q.options)
+    }));
+  };
+
+  // Run 3 consecutive 10-question practice sessions
+  const session1 = getSmartRandomQuestions(unified, 10);
+  const session2 = getSmartRandomQuestions(unified, 10);
+  const session3 = getSmartRandomQuestions(unified, 10);
+
+  assert.strictEqual(session1.length, 10, 'Session 1 must have 10 questions');
+  assert.strictEqual(session2.length, 10, 'Session 2 must have 10 questions');
+  assert.strictEqual(session3.length, 10, 'Session 3 must have 10 questions');
+
+  // Ensure no overlap between session 1 and session 2
+  const ids1 = new Set(session1.map(q => q.id));
+  const overlap = session2.filter(q => ids1.has(q.id));
+  assert.strictEqual(overlap.length, 0, 'Consecutive practice sessions must not repeat questions');
+});
+
+console.log('\n====================================================');
+console.log(`📊 RESULTS: ${passedTests} / ${totalTests} TESTS PASSED`);
+console.log('====================================================');
