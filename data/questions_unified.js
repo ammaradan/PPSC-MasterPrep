@@ -1,4 +1,4 @@
-// PPSC 100% Unique Deduplicated Question Bank (8123 Solved MCQs)
+// PPSC 100% Unique Deduplicated Question Bank (8163 Solved MCQs)
 const PPSC_UNIFIED_QUESTIONS = [
   {
     "id": "PPSC-Q-1",
@@ -129967,6 +129967,646 @@ const PPSC_UNIFIED_QUESTIONS = [
     "explanation": "اردو ڈراما نگاری میں آغا حشر کاشمیری کو اردو کا شیکسپیئر کہا جاتا ہے۔",
     "difficulty": "Medium",
     "paperSource": "PPSC Solved Past Papers - Urdu History"
+  },
+  {
+    "id": "PPSC-SMP-1-wjpb",
+    "subject": "Islamic Studies",
+    "category": "PPSC Solved Questions (Islamic Studies)",
+    "question": "Which type of knowledge is conveyed by a Mutawatir Hadith?",
+    "options": [
+      "Speculative",
+      "Hypothetical",
+      "Certain",
+      "Limited"
+    ],
+    "answer": "Certain",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-2-wjpb",
+    "subject": "Islamic Studies",
+    "category": "PPSC Solved Questions (Islamic Studies)",
+    "question": "On which event did Hazrat Umme Salma (RA) advise the Prophet (PBUH)?",
+    "options": [
+      "Conquest of Makkah",
+      "Ghazwa Badar",
+      "Sulh Hudaibia",
+      "Unfortunate"
+    ],
+    "answer": "Sulh Hudaibia",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-3-wjpb",
+    "subject": "Islamic Studies",
+    "category": "PPSC Solved Questions (Islamic Studies)",
+    "question": "Hazrat Usman (RA) established the first Islamic navy on which sea?",
+    "options": [
+      "Red Sea",
+      "Dead Sea",
+      "Mediterranean Sea",
+      "Black Sea"
+    ],
+    "answer": "Mediterranean Sea",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-4-wjpb",
+    "subject": "Islamic Studies",
+    "category": "PPSC Solved Questions (Islamic Studies)",
+    "question": "When a Hadith does not fulfill all the stringent conditions of Mutawatir, it is categorized as:",
+    "options": [
+      "Sahih",
+      "Ahad",
+      "Mozu",
+      "Weak"
+    ],
+    "answer": "Ahad",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-5-wjpb",
+    "subject": "English",
+    "category": "PPSC Solved Questions (English)",
+    "question": "The idiom 'Break a leg' means:",
+    "options": [
+      "To injure",
+      "Good luck",
+      "To fall",
+      "Unfortunate"
+    ],
+    "answer": "Good luck",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-6-wjpb",
+    "subject": "English",
+    "category": "PPSC Solved Questions (English)",
+    "question": "'Water flows down the slope.' The underlined word 'Down' is a/an:",
+    "options": [
+      "Preposition",
+      "Adverb",
+      "Conjunction",
+      "Adjective"
+    ],
+    "answer": "Adverb",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-7-wjpb",
+    "subject": "English",
+    "category": "PPSC Solved Questions (English)",
+    "question": "Plural of 'Mouse' (the animal) is:",
+    "options": [
+      "Mouses",
+      "Mouse",
+      "Mice",
+      "None"
+    ],
+    "answer": "Mice",
+    "explanation": "Verified (individually fetched answer page)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-8-wjpb",
+    "subject": "English",
+    "category": "PPSC Solved Questions (English)",
+    "question": "Choose the correct form: 'No sooner I had reached the station than the train left.'",
+    "options": [
+      "No sooner had I reached the station than the train left",
+      "No sooner I had reached the station than the train left",
+      "No sooner had I reached the station then the train left",
+      "No sooner had I reached the station when the train left"
+    ],
+    "answer": "No sooner had I reached the station than the train left",
+    "explanation": "Sourced; site listed A and C nearly identically — verify on page before use",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-9-wjpb",
+    "subject": "English",
+    "category": "PPSC Solved Questions (English)",
+    "question": "'Do not cry over ______ milk.'",
+    "options": [
+      "Boil",
+      "Cry",
+      "Spilt",
+      "None"
+    ],
+    "answer": "Spilt",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-10-wjpb",
+    "subject": "English",
+    "category": "PPSC Solved Questions (English)",
+    "question": "Choose the correct analogy: Shale : Geologist ::",
+    "options": [
+      "Reef : Astrologist",
+      "Fossils : Paleontologist",
+      "Biologist : Plants",
+      "Catacombs : Entomologist"
+    ],
+    "answer": "Fossils : Paleontologist",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-11-wjpb",
+    "subject": "English",
+    "category": "PPSC Solved Questions (English)",
+    "question": "'Such bad habits will lead ______ disgrace.'",
+    "options": [
+      "at",
+      "with",
+      "to",
+      "in"
+    ],
+    "answer": "to",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-12-wjpb",
+    "subject": "English",
+    "category": "PPSC Solved Questions (English)",
+    "question": "'I can't tell you why I am late.' The underlined clause is a:",
+    "options": [
+      "Adverb",
+      "Noun clause",
+      "Conjunction",
+      "Adjective"
+    ],
+    "answer": "Noun clause",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-13-wjpb",
+    "subject": "English",
+    "category": "PPSC Solved Questions (English)",
+    "question": "Antonym of 'Destitute':",
+    "options": [
+      "Affluent",
+      "Alone",
+      "Beggar",
+      "Hopeful"
+    ],
+    "answer": "Affluent",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-14-wjpb",
+    "subject": "English",
+    "category": "PPSC Solved Questions (English)",
+    "question": "Antonym of 'Reproach':",
+    "options": [
+      "Praise",
+      "Blame",
+      "Support",
+      "Dishonor"
+    ],
+    "answer": "Praise",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-16-wjpb",
+    "subject": "English",
+    "category": "PPSC Solved Questions (English)",
+    "question": "'Sara must be fed up ______ studying.'",
+    "options": [
+      "of",
+      "about",
+      "from",
+      "with"
+    ],
+    "answer": "with",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-17-wjpb",
+    "subject": "Mathematics",
+    "category": "PPSC Solved Questions (Mathematics)",
+    "question": "Space between two parallel lines (till their ends) is:",
+    "options": [
+      "Same",
+      "Decrease",
+      "Increase",
+      "None of these"
+    ],
+    "answer": "Same",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-18-wjpb",
+    "subject": "Mathematics",
+    "category": "PPSC Solved Questions (Mathematics)",
+    "question": "Solve: 2/3 + 3/4 =",
+    "options": [
+      "17/12",
+      "5/7",
+      "5/12",
+      "7/12"
+    ],
+    "answer": "17/12",
+    "explanation": "Verified by calculation",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-19-wjpb",
+    "subject": "Mathematics",
+    "category": "PPSC Solved Questions (Mathematics)",
+    "question": "The area of a triangle is 126 cm² and its base is 28 cm. Find its height.",
+    "options": [
+      "7 cm",
+      "9 cm",
+      "8 cm",
+      "10 cm"
+    ],
+    "answer": "9 cm",
+    "explanation": "Verified by calculation (Area = ½×base×height)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-20-wjpb",
+    "subject": "General Knowledge",
+    "category": "PPSC Solved Questions (General Knowledge)",
+    "question": "The Organisation for the Prohibition of Chemical Weapons (OPCW) headquarters are located in:",
+    "options": [
+      "The Hague",
+      "Rome",
+      "Geneva",
+      "None of these"
+    ],
+    "answer": "The Hague",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-21-wjpb",
+    "subject": "General Knowledge",
+    "category": "PPSC Solved Questions (General Knowledge)",
+    "question": "World Computer Literacy Day is observed every year on:",
+    "options": [
+      "Dec. 01",
+      "Dec. 02",
+      "Dec. 03",
+      "None of these"
+    ],
+    "answer": "Dec. 03",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-22-wjpb",
+    "subject": "General Knowledge",
+    "category": "PPSC Solved Questions (General Knowledge)",
+    "question": "______ is the capital of the Kyrgyz Republic.",
+    "options": [
+      "Jalal-Abad",
+      "Bishkek",
+      "Osh",
+      "None of these"
+    ],
+    "answer": "Bishkek",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-23-wjpb",
+    "subject": "General Knowledge",
+    "category": "PPSC Solved Questions (General Knowledge)",
+    "question": "The Deosai National Park was established in:",
+    "options": [
+      "1988",
+      "1993",
+      "2000",
+      "None of these"
+    ],
+    "answer": "1993",
+    "explanation": "Sourced; year not individually fetched — verify on page",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-24-wjpb",
+    "subject": "General Knowledge",
+    "category": "PPSC Solved Questions (General Knowledge)",
+    "question": "The Litani River is the longest river flowing entirely within:",
+    "options": [
+      "Lebanon",
+      "Israel",
+      "Iran",
+      "None of these"
+    ],
+    "answer": "Lebanon",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-25-wjpb",
+    "subject": "General Knowledge",
+    "category": "PPSC Solved Questions (General Knowledge)",
+    "question": "Diego Garcia, a strategic island base in the Indian Ocean, is located in:",
+    "options": [
+      "Indonesia",
+      "Japan",
+      "Chagos Archipelago",
+      "None of these"
+    ],
+    "answer": "Chagos Archipelago",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-26-wjpb",
+    "subject": "General Knowledge",
+    "category": "PPSC Solved Questions (General Knowledge)",
+    "question": "Exporting goods at a price lower than the normal value is known as:",
+    "options": [
+      "Cartelization",
+      "Siphoning",
+      "Dumping",
+      "None of these"
+    ],
+    "answer": "Dumping",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-27-wjpb",
+    "subject": "General Knowledge",
+    "category": "PPSC Solved Questions (General Knowledge)",
+    "question": "The Convention on International Trade in Endangered Species (CITES) entered into force in:",
+    "options": [
+      "1973",
+      "1974",
+      "1975",
+      "None of these"
+    ],
+    "answer": "1975",
+    "explanation": "Sourced; exact year not individually fetched — verify on page",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-28-wjpb",
+    "subject": "General Knowledge",
+    "category": "PPSC Solved Questions (General Knowledge)",
+    "question": "Ras Laffan Industrial City, one of the world's largest LNG export hubs, is located in:",
+    "options": [
+      "UAE",
+      "Iran",
+      "Qatar",
+      "None of these"
+    ],
+    "answer": "Qatar",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-29-wjpb",
+    "subject": "General Knowledge",
+    "category": "PPSC Solved Questions (General Knowledge)",
+    "question": "Vaduz is the capital of:",
+    "options": [
+      "Latvia",
+      "Liechtenstein",
+      "Monaco",
+      "None of these"
+    ],
+    "answer": "Liechtenstein",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-30-wjpb",
+    "subject": "General Knowledge",
+    "category": "PPSC Solved Questions (General Knowledge)",
+    "question": "Leo Tolstoy's 'War and Peace' tells the story of the French invasion of:",
+    "options": [
+      "Algeria",
+      "Ethiopia",
+      "Russia",
+      "None of these"
+    ],
+    "answer": "Russia",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-31-wjpb",
+    "subject": "General Knowledge",
+    "category": "PPSC Solved Questions (General Knowledge)",
+    "question": "______ is the author of 'Essay on the Principle of Population' (1798).",
+    "options": [
+      "Thomas Malthus",
+      "Ester Boserup",
+      "Garrett Hardin",
+      "None of these"
+    ],
+    "answer": "Thomas Malthus",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-32-wjpb",
+    "subject": "General Knowledge",
+    "category": "PPSC Solved Questions (General Knowledge)",
+    "question": "The Cape of Good Hope is a rocky headland on the Atlantic coast of:",
+    "options": [
+      "South Africa",
+      "Kenya",
+      "Djibouti",
+      "None of these"
+    ],
+    "answer": "South Africa",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-33-wjpb",
+    "subject": "General Knowledge",
+    "category": "PPSC Solved Questions (General Knowledge)",
+    "question": "The Suez Canal officially opened in:",
+    "options": [
+      "1816",
+      "1857",
+      "1869",
+      "None of these"
+    ],
+    "answer": "1869",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-34-wjpb",
+    "subject": "General Knowledge",
+    "category": "PPSC Solved Questions (General Knowledge)",
+    "question": "The Asian Infrastructure Investment Bank (AIIB) started operations in:",
+    "options": [
+      "2014",
+      "2016",
+      "2017",
+      "None of these"
+    ],
+    "answer": "2016",
+    "explanation": "Sourced; exact year not individually fetched — verify on page",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-35-wjpb",
+    "subject": "General Knowledge",
+    "category": "PPSC Solved Questions (General Knowledge)",
+    "question": "The International Energy Agency (IEA) was established in:",
+    "options": [
+      "1945",
+      "1970",
+      "1974",
+      "None of these"
+    ],
+    "answer": "1974",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-36-wjpb",
+    "subject": "General Knowledge",
+    "category": "PPSC Solved Questions (General Knowledge)",
+    "question": "Mont Blanc, often called the 'Roof of Europe', is located in:",
+    "options": [
+      "The Andes",
+      "The Scandes",
+      "The Alps",
+      "None of these"
+    ],
+    "answer": "The Alps",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-37-wjpb",
+    "subject": "General Knowledge",
+    "category": "PPSC Solved Questions (General Knowledge)",
+    "question": "______ is known as the father of geography.",
+    "options": [
+      "Eratosthenes",
+      "Miletus",
+      "Ibn Firnas",
+      "None of these"
+    ],
+    "answer": "Eratosthenes",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-38-wjpb",
+    "subject": "General Knowledge",
+    "category": "PPSC Solved Questions (General Knowledge)",
+    "question": "Iran nationalized its oil industry in:",
+    "options": [
+      "1948",
+      "1951",
+      "1979",
+      "None of these"
+    ],
+    "answer": "1951",
+    "explanation": "Sourced (answer cross-checked, not individually fetched)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-39-wjpb",
+    "subject": "General Knowledge",
+    "category": "PPSC Solved Questions (General Knowledge)",
+    "question": "Where is Lake Ontario located?",
+    "options": [
+      "Australia",
+      "Canada",
+      "North America",
+      "Japan"
+    ],
+    "answer": "North America",
+    "explanation": "Sourced; Ontario borders Canada/US, 'North America' likely intended broad answer — verify on page",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-40-wjpb",
+    "subject": "General Knowledge",
+    "category": "PPSC Solved Questions (General Knowledge)",
+    "question": "Which is the largest desert in the world by total area?",
+    "options": [
+      "Sahara Desert",
+      "Arabian Desert",
+      "Antarctic Desert",
+      "Gobi Desert"
+    ],
+    "answer": "Antarctic Desert",
+    "explanation": "Verified (Antarctica is the largest desert by area; Sahara is the largest hot desert)",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
+  },
+  {
+    "id": "PPSC-SMP-41-wjpb",
+    "subject": "General Knowledge",
+    "category": "PPSC Solved Questions (General Knowledge)",
+    "question": "Who wrote the famous tragedy 'Hamlet'?",
+    "options": [
+      "Charles Dickens",
+      "William Shakespeare",
+      "Leo Tolstoy",
+      "Mark Twain"
+    ],
+    "answer": "William Shakespeare",
+    "explanation": "Verified",
+    "difficulty": "Medium",
+    "paperSource": "PPSC Solved Examination Paper"
   }
 ];
 if (typeof module !== 'undefined') module.exports = { PPSC_UNIFIED_QUESTIONS };
