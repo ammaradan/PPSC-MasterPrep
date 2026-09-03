@@ -630,7 +630,19 @@
           </div>
         </div>
 
-        <a id="whatsappPayBtn" href="https://wa.me/923414442225?text=Hello%20Ammar!%20I%20have%20sent%20Rs.1299%20payment%20for%20PPSC%20MasterPrep%20Pro%20Access%20(2%20Devices:%20Mobile%20+%20Laptop).%20My%20Gmail%20is:%20" target="_blank" class="btn btn-primary" style="width: 100%; justify-content: center; background: #25D366; border-color: #25D366; color: #fff; font-weight: 700; text-decoration: none; padding: 12px; font-size: 0.95rem;">
+        <!-- Clean Device Signature Badge -->
+        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); border-radius: 8px; padding: 0.6rem 0.85rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-mobile-screen" style="color: var(--primary); font-size: 1rem;"></i>
+            <span style="font-size: 0.82rem; color: var(--text-muted);">Device Code:</span>
+            <strong style="font-family: monospace; font-size: 0.95rem; color: #fff; letter-spacing: 0.5px;" id="studentDeviceIdDisplay">...</strong>
+          </div>
+          <button class="btn btn-secondary" onclick="PPSC_AUTH.copyDeviceId()" style="padding: 4px 10px; font-size: 0.75rem;">
+            <i class="fa-regular fa-copy"></i> Copy
+          </button>
+        </div>
+
+        <a id="whatsappPayBtn" href="https://wa.me/923414442225?text=Hello%20Ammar!%20I%20have%20sent%20Rs.1299%20payment%20for%20PPSC%20MasterPrep%20Pro%20Access." target="_blank" class="btn btn-primary" style="width: 100%; justify-content: center; background: #25D366; border-color: #25D366; color: #fff; font-weight: 700; text-decoration: none; padding: 12px; font-size: 0.95rem;">
           <i class="fa-brands fa-whatsapp" style="font-size: 1.3rem;"></i> Send Payment Slip on WhatsApp for Pro Key (0341-4442225)
         </a>
       </div>
