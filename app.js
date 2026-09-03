@@ -284,12 +284,67 @@ const App = {
   },
 
   // ==========================================
-  // EXAM & PRACTICE ENGINE
+  // EXAM & PRACTICE ENGINE (NON-REPEATING)
   // ==========================================
+  getSmartRandomQuestions(pool, count) {
+    if (!pool || pool.length === 0) return [];
+    
+    // Read seen history from localStorage
+    let seenHistory = [];
+    try {
+      const raw = localStorage.getItem('ppsc_seen_history');
+      if (raw) seenHistory = JSON.parse(raw);
+    } catch(e) {}
+
+    const seenSet = new Set(seenHistory);
+    
+    // Split into fresh unseen and previously seen
+    const unseen = pool.filter(q => !seenSet.has(q.id || q.question));
+    const seen = pool.filter(q => seenSet.has(q.id || q.question));
+
+    // Fisher-Yates high entropy array shuffle
+    const shuffle = (arr) => {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    };
+
+    const shuffledUnseen = shuffle(unseen);
+    const shuffledSeen = shuffle(seen);
+
+    // Prioritize fresh unseen questions first
+    let selected = [];
+    if (shuffledUnseen.length >= count) {
+      selected = shuffledUnseen.slice(0, count);
+    } else {
+      selected = [...shuffledUnseen, ...shuffledSeen.slice(0, count - shuffledUnseen.length)];
+      // Reset seen history if student has practiced through the full pool
+      seenHistory = [];
+    }
+
+    // Save newly selected IDs to seen history
+    selected.forEach(q => seenHistory.push(q.id || q.question));
+    if (seenHistory.length > 5000) seenHistory = seenHistory.slice(-2000);
+    try {
+      localStorage.setItem('ppsc_seen_history', JSON.stringify(seenHistory));
+    } catch(e) {}
+
+    // Deeply randomize choices A, B, C, D so answer orders are dynamic every session
+    return selected.map((q, idx) => ({
+      ...q,
+      examQuestionId: idx + 1,
+      options: shuffle(q.options)
+    }));
+  },
+
   startFullMockExam(switchTabNow = true) {
     const isPro = typeof PPSC_AUTH !== 'undefined' && PPSC_AUTH.state.isPro;
     const count = isPro ? 100 : 10;
-    const examQuestions = generateMockExam(count);
+    const pool = typeof EXPANDED_PPSC_QUESTIONS !== 'undefined' && EXPANDED_PPSC_QUESTIONS.length > 0 ? EXPANDED_PPSC_QUESTIONS : (typeof PPSC_UNIFIED_QUESTIONS !== 'undefined' ? PPSC_UNIFIED_QUESTIONS : []);
+    const examQuestions = this.getSmartRandomQuestions(pool, count);
 
     if (!isPro && switchTabNow) {
       this.showToast('Free Demo: 10 Questions unlocked. To get access to full 100-MCQ exams, please buy the Pro version (Rs. 1,299).', 'info');
@@ -318,17 +373,10 @@ const App = {
     const modeType = document.getElementById('practiceModeSelect')?.value || 'instant'; // 'instant' | 'quiz'
 
     let pool = getQuestionsBySubject(subject);
-    if (pool.length === 0) pool = EXPANDED_PPSC_QUESTIONS;
+    if (!pool || pool.length === 0) pool = EXPANDED_PPSC_QUESTIONS;
 
-    // Deep Fisher-Yates shuffle across pool
-    const shuffled = [...pool]
-      .sort(() => 0.5 - Math.random())
-      .slice(0, count)
-      .map((q, idx) => ({
-        ...q,
-        examQuestionId: idx + 1,
-        options: [...q.options].sort(() => 0.5 - Math.random())
-      }));
+    // Smart non-repeating random selection
+    const shuffled = this.getSmartRandomQuestions(pool, count);
 
     this.setupExamSession({
       title: `${subject === 'All' ? 'Mixed Syllabus' : subject} Practice Session (${shuffled.length} MCQs${!isPro ? ' - Demo' : ''})`,

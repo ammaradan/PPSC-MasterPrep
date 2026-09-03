@@ -1,29 +1,23 @@
 // PPSC Master Question Bank - Universal Aggregator & Runtime Helper
 
-// Combine all modules
+// Combine all modules into 100% deduplicated clean pool
 let EXPANDED_PPSC_QUESTIONS = [];
 
 if (typeof window !== 'undefined') {
-  EXPANDED_PPSC_QUESTIONS = [
-    ...(typeof PPSC_CATALOG_QUESTIONS !== 'undefined' && Array.isArray(PPSC_CATALOG_QUESTIONS) ? PPSC_CATALOG_QUESTIONS : []),
-    ...(typeof MASSIVE_PPSC_DATA !== 'undefined' && Array.isArray(MASSIVE_PPSC_DATA) ? MASSIVE_PPSC_DATA : []),
-    ...(typeof PAKISTAN_QUESTIONS !== 'undefined' ? PAKISTAN_QUESTIONS : []),
-    ...(typeof ISLAMIC_QUESTIONS !== 'undefined' ? ISLAMIC_QUESTIONS : []),
-    ...(typeof GK_QUESTIONS !== 'undefined' ? GK_QUESTIONS : []),
-    ...(typeof SCIENCE_QUESTIONS !== 'undefined' ? SCIENCE_QUESTIONS : []),
-    ...(typeof COMPUTER_QUESTIONS !== 'undefined' ? COMPUTER_QUESTIONS : []),
-    ...(typeof MATH_QUESTIONS !== 'undefined' ? MATH_QUESTIONS : []),
-    ...(typeof ENGLISH_QUESTIONS !== 'undefined' ? ENGLISH_QUESTIONS : []),
-    ...(typeof URDU_QUESTIONS !== 'undefined' ? URDU_QUESTIONS : []),
-    ...(typeof CURRENT_AFFAIRS_QUESTIONS !== 'undefined' ? CURRENT_AFFAIRS_QUESTIONS : [])
-  ];
+  if (typeof PPSC_UNIFIED_QUESTIONS !== 'undefined' && Array.isArray(PPSC_UNIFIED_QUESTIONS) && PPSC_UNIFIED_QUESTIONS.length > 0) {
+    EXPANDED_PPSC_QUESTIONS = PPSC_UNIFIED_QUESTIONS;
+  } else {
+    EXPANDED_PPSC_QUESTIONS = [
+      ...(typeof PPSC_CATALOG_QUESTIONS !== 'undefined' ? PPSC_CATALOG_QUESTIONS : []),
+      ...(typeof MASSIVE_PPSC_DATA !== 'undefined' ? MASSIVE_PPSC_DATA : [])
+    ];
+  }
 } else if (typeof module !== 'undefined') {
   try {
-    const catalog = require('./questions_catalog.js');
-    const massive = require('./questions_massive.js');
-    const catList = catalog && catalog.PPSC_CATALOG_QUESTIONS ? catalog.PPSC_CATALOG_QUESTIONS : [];
-    const masList = Array.isArray(massive) ? massive : [];
-    EXPANDED_PPSC_QUESTIONS = [...catList, ...masList];
+    const unified = require('./questions_unified.js');
+    if (unified && unified.PPSC_UNIFIED_QUESTIONS) {
+      EXPANDED_PPSC_QUESTIONS = unified.PPSC_UNIFIED_QUESTIONS;
+    }
   } catch(e) {}
 }
 
@@ -33,33 +27,38 @@ if (typeof module !== 'undefined' && module.exports) {
   };
 }
 
+// High-entropy Fisher-Yates array shuffler
+function shuffleArray(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
 // Resilient Subject Matching Helper
 function getQuestionsBySubject(subject) {
-  if (!subject || subject === 'All') return EXPANDED_PPSC_QUESTIONS;
+  const pool = EXPANDED_PPSC_QUESTIONS.length > 0 ? EXPANDED_PPSC_QUESTIONS : (typeof PPSC_UNIFIED_QUESTIONS !== 'undefined' ? PPSC_UNIFIED_QUESTIONS : []);
+  if (!subject || subject === 'All') return pool;
   const s = subject.toLowerCase().trim();
-  return EXPANDED_PPSC_QUESTIONS.filter(q => {
+  return pool.filter(q => {
     if (!q.subject) return false;
     const qs = q.subject.toLowerCase().trim();
     return qs === s || qs.includes(s) || s.includes(qs);
   });
 }
 
-// Generate authentic full 100-question or custom-length mock exam pool
+// Generate authentic, non-repeating, deeply shuffled exam pool
 function generateMockExam(count = 100) {
-  const pool = [...EXPANDED_PPSC_QUESTIONS];
-  const shuffled = [...pool].sort(() => 0.5 - Math.random());
-  
-  if (count <= shuffled.length) {
-    return shuffled.slice(0, count).map((q, idx) => ({ ...q, examQuestionId: idx + 1 }));
-  }
+  const pool = EXPANDED_PPSC_QUESTIONS.length > 0 ? EXPANDED_PPSC_QUESTIONS : (typeof PPSC_UNIFIED_QUESTIONS !== 'undefined' ? PPSC_UNIFIED_QUESTIONS : []);
+  const shuffled = shuffleArray(pool);
+  const selected = shuffled.slice(0, Math.min(count, shuffled.length));
 
-  const exam = [];
-  while (exam.length < count) {
-    const item = shuffled[exam.length % shuffled.length];
-    exam.push({
-      ...item,
-      examQuestionId: exam.length + 1
-    });
-  }
-  return exam;
+  // Deeply shuffle choices A, B, C, D so order is fresh every attempt
+  return selected.map((q, idx) => ({
+    ...q,
+    examQuestionId: idx + 1,
+    options: shuffleArray(q.options)
+  }));
 }
