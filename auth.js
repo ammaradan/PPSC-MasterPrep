@@ -1,7 +1,7 @@
-// PPSC MasterPrep - Monetization & Gmail License Security Engine
+// PPSC MasterPrep - Monetization & 1-Device Bound License Security Engine
 
 const PPSC_AUTH = {
-  SECRET_SALT: "PPSC_MASTERPREP_PRO_2026_SECURE_SALT_KEY",
+  SECRET_SALT: "PPSC_MASTERPREP_PRO_2026_SECURE_DEVICE_SALT_KEY",
   FREE_TIER_LIMIT: 20,
   ADMIN_PIN: "PPSC2026Adan26627",
 
@@ -21,7 +21,9 @@ const PPSC_AUTH = {
   initDeviceId() {
     let dId = localStorage.getItem('ppsc_device_id');
     if (!dId) {
-      dId = 'DEV-' + Math.random().toString(36).substring(2, 10).toUpperCase() + '-' + Date.now().toString(36).toUpperCase();
+      const rand = Math.floor(1000 + Math.random() * 9000);
+      const hex = Math.random().toString(36).substring(2, 5).toUpperCase();
+      dId = `DEV-${rand}-${hex}`;
       localStorage.setItem('ppsc_device_id', dId);
     }
     this.state.deviceId = dId;
@@ -38,34 +40,39 @@ const PPSC_AUTH = {
     return Math.abs(hash).toString(36).toUpperCase();
   },
 
-  // Generate deterministic license key for a specific Gmail
-  generateKeyForEmail(email) {
-    if (!email) return "";
+  // Generate deterministic license key strictly bound to (Email + Device ID)
+  generateKeyForDevice(email, deviceId) {
+    if (!email || !deviceId) return "";
     const cleanEmail = email.toLowerCase().trim();
-    const part1 = this.hashString(cleanEmail + this.SECRET_SALT).padStart(4, '0').substring(0, 4);
-    const part2 = this.hashString(this.SECRET_SALT + cleanEmail).padStart(4, '0').substring(0, 4);
-    const part3 = this.hashString(cleanEmail + cleanEmail.length + this.SECRET_SALT).padStart(4, '0').substring(0, 4);
+    const cleanDev = deviceId.toUpperCase().trim();
+    const part1 = this.hashString(cleanEmail + cleanDev + this.SECRET_SALT).padStart(4, '0').substring(0, 4);
+    const part2 = this.hashString(this.SECRET_SALT + cleanDev + cleanEmail).padStart(4, '0').substring(0, 4);
+    const part3 = this.hashString(cleanDev + cleanEmail.length + this.SECRET_SALT).padStart(4, '0').substring(0, 4);
     return `PPSC-PRO-${part1}-${part2}-${part3}`;
   },
 
-  // Verify if a key matches the student's email
-  verifyKey(email, key) {
+  // Verify if a key matches the student's email AND current device
+  verifyKey(email, key, deviceId = null) {
     if (!email || !key) return false;
-    const expected = this.generateKeyForEmail(email);
+    const currentDev = deviceId || this.state.deviceId;
+    const expected = this.generateKeyForDevice(email, currentDev);
     return expected.trim().toUpperCase() === key.trim().toUpperCase();
   },
 
-  // Save license
+  // Activate license on THIS device
   activateLicense(email, key) {
     const cleanEmail = email.toLowerCase().trim();
     const cleanKey = key.trim().toUpperCase();
 
     if (!cleanEmail.includes('@') || !cleanEmail.includes('.')) {
-      return { success: false, message: "Please enter a valid Gmail / Email address." };
+      return { success: false, message: "Please enter a valid Gmail address." };
     }
 
-    if (!this.verifyKey(cleanEmail, cleanKey)) {
-      return { success: false, message: "Invalid License Key for this Gmail address. Please verify with seller." };
+    if (!this.verifyKey(cleanEmail, cleanKey, this.state.deviceId)) {
+      return { 
+        success: false, 
+        message: "❌ Invalid Key or Key Locked to Another Device. Each license is valid for 1 device only." 
+      };
     }
 
     const licenseData = {
@@ -81,7 +88,10 @@ const PPSC_AUTH = {
     this.state.licenseKey = cleanKey;
 
     this.updateUI();
-    return { success: true, message: `Congratulations! PPSC MasterPrep Pro has been successfully activated for ${cleanEmail}!` };
+    return { 
+      success: true, 
+      message: `🎉 Success! PPSC MasterPrep Pro has been unlocked for ${cleanEmail} on this device!` 
+    };
   },
 
   loadLicense() {
@@ -89,7 +99,7 @@ const PPSC_AUTH = {
       const raw = localStorage.getItem('ppsc_pro_license');
       if (raw) {
         const data = JSON.parse(raw);
-        if (data.email && data.key && this.verifyKey(data.email, data.key)) {
+        if (data.email && data.key && data.deviceId === this.state.deviceId && this.verifyKey(data.email, data.key, this.state.deviceId)) {
           this.state.isPro = true;
           this.state.userEmail = data.email;
           this.state.licenseKey = data.key;
@@ -108,7 +118,7 @@ const PPSC_AUTH = {
           <div style="display: flex; align-items: center; gap: 6px; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); padding: 5px 12px; border-radius: 50px; color: #10B981; font-size: 0.8rem; font-weight: 700;">
             <i class="fa-solid fa-crown" style="color: #F59E0B;"></i>
             <span>PRO MEMBER</span>
-            <span style="font-size: 0.72rem; opacity: 0.8; max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">(${this.state.userEmail})</span>
+            <span style="font-size: 0.72rem; opacity: 0.8; max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">(${this.state.userEmail})</span>
           </div>
         `;
       } else {
@@ -119,6 +129,23 @@ const PPSC_AUTH = {
         `;
       }
     }
+
+    // Update Device ID in Paywall modal
+    const devDisplay = document.getElementById('studentDeviceIdDisplay');
+    if (devDisplay) devDisplay.textContent = this.state.deviceId;
+
+    // Update WhatsApp link with prefilled Device ID
+    const waBtn = document.getElementById('whatsappPayBtn');
+    if (waBtn) {
+      const waText = encodeURIComponent(`Hello Ammar! I have sent Rs.1299 for PPSC MasterPrep Pro Access.\nMy Gmail: \nMy Device ID: ${this.state.deviceId}`);
+      waBtn.href = `https://wa.me/923414442225?text=${waText}`;
+    }
+  },
+
+  copyDeviceId() {
+    navigator.clipboard.writeText(this.state.deviceId).then(() => {
+      if (typeof App !== 'undefined') App.showToast(`Device ID (${this.state.deviceId}) copied!`, 'success');
+    });
   },
 
   checkAccess(actionType = 'general') {
@@ -128,6 +155,7 @@ const PPSC_AUTH = {
   },
 
   openPaywallModal(context = '') {
+    this.updateUI();
     const modal = document.getElementById('paywallModal');
     const alertBox = document.getElementById('paywallContextAlert');
     
@@ -156,16 +184,23 @@ const PPSC_AUTH = {
     if (modal) modal.classList.remove('active');
   },
 
+  // Owner Admin Generator Tool
   openAdminGenerator() {
-    const pin = prompt("Enter Master Admin PIN to generate student license keys:");
+    const pin = prompt("Enter Master Admin PIN to generate 1-Device license keys:");
     if (pin === this.ADMIN_PIN) {
       const email = prompt("Enter Student Gmail address:");
-      if (email && email.includes('@')) {
-        const key = this.generateKeyForEmail(email);
-        prompt(`Generated License Key for ${email} (Copy and send to student):`, key);
-      } else if (email) {
+      if (!email || !email.includes('@')) {
         alert("Invalid email format.");
+        return;
       }
+      const deviceId = prompt(`Enter Student Device ID (e.g. ${this.state.deviceId}) received from student WhatsApp:`);
+      if (!deviceId || !deviceId.startsWith("DEV-")) {
+        alert("Invalid Device ID format. Must start with DEV-");
+        return;
+      }
+
+      const key = this.generateKeyForDevice(email, deviceId);
+      prompt(`Generated 1-Device Locked Key for ${email} (${deviceId}):\n\n(Copy and send to student)`, key);
     } else if (pin !== null) {
       alert("Incorrect Admin PIN.");
     }
