@@ -170,9 +170,9 @@ const PPSC_AUTH = {
     const modal = document.getElementById('paywallModal');
     const alertBox = document.getElementById('paywallContextAlert');
     
-    let msg = "To get full access to all 8,000+ MCQs, 245 Solved Past Papers, and 100-MCQ Mock Simulators, please buy the Pro version.";
+    let msg = "To get full access to all 8000+ MCQs, 245 Solved Past Papers, and 90-min Mock Simulators, please buy the Pro version.";
     if (context === 'welcome') {
-      msg = "👋 <strong>Welcome to PPSC MasterPrep!</strong> Get full lifetime access for <strong>1 Device (Device-Locked)</strong> for just Rs. 1,299. You can close this popup to try the 10-MCQ demo.";
+      msg = "👋 <strong>Welcome to PPSC MasterPrep!</strong> Get full lifetime access for <strong>1 Mobile on 1 Gmail</strong> for just Rs. 1,299. You can close this popup to try the 10-MCQ demo.";
     } else if (context === 'bank') {
       msg = "🔒 <strong>Question Bank Locked in Demo:</strong> To browse and search all solved questions, please buy the Pro version.";
     } else if (context === 'past-papers') {
