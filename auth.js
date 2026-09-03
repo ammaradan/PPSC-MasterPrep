@@ -2,7 +2,7 @@
 
 const PPSC_AUTH = {
   SECRET_SALT: "PPSC_MASTERPREP_PRO_2026_SECURE_SALT_KEY",
-  FREE_TIER_LIMIT: 50,
+  FREE_TIER_LIMIT: 20,
   ADMIN_PIN: "PPSC2026Adan26627",
 
   state: {
@@ -113,8 +113,8 @@ const PPSC_AUTH = {
         `;
       } else {
         headerChip.innerHTML = `
-          <button class="btn btn-warning" style="padding: 5px 12px; font-size: 0.8rem; font-weight: 700; border-radius: 50px; box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);" onclick="PPSC_AUTH.openPaywallModal()">
-            <i class="fa-solid fa-gem" style="color: #fff;"></i> Unlock Pro (Rs. 1,299)
+          <button class="btn btn-warning" style="padding: 5px 12px; font-size: 0.8rem; font-weight: 700; border-radius: 50px; box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);" onclick="PPSC_AUTH.openPaywallModal('general')">
+            <i class="fa-solid fa-gem" style="color: #fff;"></i> Buy Pro (Rs. 1,299)
           </button>
         `;
       }
@@ -123,14 +123,31 @@ const PPSC_AUTH = {
 
   checkAccess(actionType = 'general') {
     if (this.state.isPro) return true;
-
-    // Show Paywall Modal
     this.openPaywallModal(actionType);
     return false;
   },
 
   openPaywallModal(context = '') {
     const modal = document.getElementById('paywallModal');
+    const alertBox = document.getElementById('paywallContextAlert');
+    
+    let msg = "To get full access to all 3,600+ MCQs, 245 Solved Past Papers, and 100-MCQ Mock Simulators, please buy the Pro version.";
+    if (context === 'bank') {
+      msg = "🔒 <strong>Question Bank Locked in Demo:</strong> To browse and search all 3,600+ solved questions, please buy the Pro version.";
+    } else if (context === 'past-papers') {
+      msg = "🔒 <strong>Past Papers Locked in Demo:</strong> To launch and practice any of the 245 solved past papers, please buy the Pro version.";
+    } else if (context === 'flashcards') {
+      msg = "🔒 <strong>Flashcards Locked in Demo:</strong> To access all revision flashcards, please buy the Pro version.";
+    } else if (context === 'export') {
+      msg = "🔒 <strong>Export Locked:</strong> Downloading the complete Question Bank is reserved for Pro members.";
+    } else if (context === 'exam-limit') {
+      msg = "🔒 <strong>Full 100-MCQ Exam Locked:</strong> The free demo provides 20 sample MCQs. To take the full 100-MCQ mock test, please buy the Pro version.";
+    }
+
+    if (alertBox) {
+      alertBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation" style="color: var(--warning); margin-right: 6px;"></i> ${msg}`;
+    }
+
     if (modal) modal.classList.add('active');
   },
 

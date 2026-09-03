@@ -258,17 +258,17 @@ const App = {
 
   startPastPaperExam(paperTitle) {
     const isPro = typeof PPSC_AUTH !== 'undefined' && PPSC_AUTH.state.isPro;
-    const count = isPro ? 100 : 50;
-    const questions = generateMockExam(count);
-    
     if (!isPro) {
-      this.showToast('Free Demo: 50 Questions loaded. Upgrade to Pro (Rs. 1,299) for full 100-MCQ solved paper.', 'info');
+      if (typeof PPSC_AUTH !== 'undefined') PPSC_AUTH.openPaywallModal('past-papers');
+      this.showToast('To get access to all 245 solved past papers, please buy the Pro version (Rs. 1,299).', 'danger');
+      return;
     }
 
+    const questions = generateMockExam(100);
     this.setupExamSession({
-      title: `${paperTitle} ${!isPro ? '(50 MCQs Demo)' : ''}`,
+      title: paperTitle,
       questions: questions,
-      durationMinutes: isPro ? 90 : 45,
+      durationMinutes: 90,
       mode: 'exam',
       switchTabNow: true
     });
@@ -279,17 +279,17 @@ const App = {
   // ==========================================
   startFullMockExam(switchTabNow = true) {
     const isPro = typeof PPSC_AUTH !== 'undefined' && PPSC_AUTH.state.isPro;
-    const count = isPro ? 100 : 50;
+    const count = isPro ? 100 : 20;
     const examQuestions = generateMockExam(count);
 
     if (!isPro && switchTabNow) {
-      this.showToast('Free Demo: 50 Questions unlocked. Upgrade to Pro (Rs. 1,299) for full 100-MCQ Mock Exam.', 'info');
+      this.showToast('Free Demo: 20 Questions unlocked. To get access to full 100-MCQ exams, please buy the Pro version (Rs. 1,299).', 'info');
     }
 
     this.setupExamSession({
-      title: isPro ? 'PPSC General Ability Full Mock Test (100 MCQs)' : 'PPSC General Ability Free Demo Test (50 MCQs)',
+      title: isPro ? 'PPSC General Ability Full Mock Test (100 MCQs)' : 'PPSC General Ability Free Demo Exam (20 MCQs)',
       questions: examQuestions,
-      durationMinutes: isPro ? 90 : 45,
+      durationMinutes: isPro ? 90 : 20,
       mode: 'exam',
       switchTabNow: switchTabNow
     });
@@ -300,11 +300,10 @@ const App = {
     const subject = selectedSubject || document.getElementById('practiceSubjectSelect')?.value || 'All';
     let requestedCount = customCount || parseInt(document.getElementById('practiceCountSelect')?.value, 10) || 100;
     
-    // Strict 50 MCQs Demo limit for non-pro users
-    let count = requestedCount;
-    if (!isPro && count > 50) {
-      count = 50;
-      this.showToast('Free Demo limit: Practicing 50 MCQs. Unlock Pro (Rs. 1,299) for 100+ questions.', 'info');
+    // Strict 20 MCQs Demo limit for free demo users
+    let count = isPro ? requestedCount : 20;
+    if (!isPro && requestedCount > 20) {
+      this.showToast('Free Demo: Practicing 20 MCQs. To get access on all 400 MCQs per subject, please buy the Pro version (Rs. 1,299).', 'info');
     }
 
     const modeType = document.getElementById('practiceModeSelect')?.value || 'instant'; // 'instant' | 'quiz'
@@ -323,9 +322,9 @@ const App = {
       }));
 
     this.setupExamSession({
-      title: `${subject === 'All' ? 'Mixed Syllabus' : subject} Practice Session (${shuffled.length} MCQs${!isPro && requestedCount > 50 ? ' - Demo' : ''})`,
+      title: `${subject === 'All' ? 'Mixed Syllabus' : subject} Practice Session (${shuffled.length} MCQs${!isPro ? ' - Demo' : ''})`,
       questions: shuffled,
-      durationMinutes: Math.ceil(shuffled.length * 0.9), // ~45 mins for 50 Qs, ~90 mins for 100 Qs
+      durationMinutes: Math.ceil(shuffled.length * 0.9), // ~18 mins for 20 Qs, ~90 mins for 100 Qs
       mode: modeType === 'instant' ? 'practice-instant' : 'practice-quiz',
       switchTabNow: true
     });
@@ -632,6 +631,25 @@ const App = {
     const list = document.getElementById('qBankList');
     if (!list) return;
 
+    const isPro = typeof PPSC_AUTH !== 'undefined' && PPSC_AUTH.state.isPro;
+    if (!isPro) {
+      list.innerHTML = `
+        <div style="text-align: center; padding: 4rem 1.5rem; background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid rgba(245, 158, 11, 0.3);">
+          <div style="font-size: 3.5rem; color: var(--warning); margin-bottom: 1rem;">
+            <i class="fa-solid fa-lock"></i>
+          </div>
+          <h2 style="font-size: 1.6rem; color: #fff; margin-bottom: 0.5rem; font-family: 'Outfit', sans-serif;">Question Bank Locked in Free Demo</h2>
+          <p style="color: var(--text-muted); max-width: 580px; margin: 0 auto 1.5rem; font-size: 0.95rem; line-height: 1.6;">
+            The complete 3,600+ solved question bank with instant search, subject filters, and explanations is reserved for Pro members. <br><strong style="color: #FDE68A;">To get access on all data, please buy the Pro version.</strong>
+          </p>
+          <button class="btn btn-warning" onclick="PPSC_AUTH.openPaywallModal('bank')" style="padding: 12px 28px; font-size: 1rem; font-weight: 700; border-radius: 50px;">
+            <i class="fa-solid fa-gem"></i> Buy Pro Version (Rs. 1,299)
+          </button>
+        </div>
+      `;
+      return;
+    }
+
     if (resetPage) this.stateBank.page = 1;
 
     const search = (document.getElementById('bankSearchInput')?.value || '').toLowerCase().trim();
@@ -905,6 +923,28 @@ const App = {
   // FLASHCARDS STUDIO
   // ==========================================
   initFlashcards() {
+    const isPro = typeof PPSC_AUTH !== 'undefined' && PPSC_AUTH.state.isPro;
+    if (!isPro) {
+      const container = document.getElementById('tab-flashcards');
+      if (container) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 4rem 1.5rem; background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid rgba(245, 158, 11, 0.3);">
+            <div style="font-size: 3.5rem; color: var(--warning); margin-bottom: 1rem;">
+              <i class="fa-solid fa-lock"></i>
+            </div>
+            <h2 style="font-size: 1.6rem; color: #fff; margin-bottom: 0.5rem; font-family: 'Outfit', sans-serif;">Flashcards Revision Studio Locked in Free Demo</h2>
+            <p style="color: var(--text-muted); max-width: 580px; margin: 0 auto 1.5rem; font-size: 0.95rem; line-height: 1.6;">
+              Rapid memorization 3D flip flashcards across all 9 subjects are reserved for Pro members. <br><strong style="color: #FDE68A;">To get access on all data, please buy the Pro version.</strong>
+            </p>
+            <button class="btn btn-warning" onclick="PPSC_AUTH.openPaywallModal('flashcards')" style="padding: 12px 28px; font-size: 1rem; font-weight: 700; border-radius: 50px;">
+              <i class="fa-solid fa-gem"></i> Buy Pro Version (Rs. 1,299)
+            </button>
+          </div>
+        `;
+      }
+      return;
+    }
+
     this.state.flashcards.items = [...EXPANDED_PPSC_QUESTIONS].sort(() => 0.5 - Math.random());
     this.state.flashcards.currentIndex = 0;
     this.renderCurrentFlashcard();
