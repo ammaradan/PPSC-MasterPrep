@@ -206,6 +206,39 @@ body {
   color: var(--primary);
 }
 
+/* Eye-Catching Glowing Buy Pro Button */
+.btn-buy-pro-glow {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 50%, #B45309 100%);
+  color: #FFFFFF !important;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  padding: 8px 18px;
+  border-radius: 50px;
+  border: 1px solid rgba(253, 230, 138, 0.6);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.45), 0 4px 10px rgba(0,0,0,0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: buyProPulse 2.5s infinite;
+}
+
+.btn-buy-pro-glow:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 0 28px rgba(245, 158, 11, 0.7), 0 6px 15px rgba(0,0,0,0.4);
+  background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 50%, #D97706 100%);
+}
+
+@keyframes buyProPulse {
+  0% { box-shadow: 0 0 15px rgba(245, 158, 11, 0.4); }
+  50% { box-shadow: 0 0 26px rgba(245, 158, 11, 0.75); }
+  100% { box-shadow: 0 0 15px rgba(245, 158, 11, 0.4); }
+}
+
 /* Layout */
 .main-wrapper {
   max-width: 1400px;

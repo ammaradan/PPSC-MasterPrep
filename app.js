@@ -288,17 +288,17 @@ const App = {
   // ==========================================
   startFullMockExam(switchTabNow = true) {
     const isPro = typeof PPSC_AUTH !== 'undefined' && PPSC_AUTH.state.isPro;
-    const count = isPro ? 100 : 20;
+    const count = isPro ? 100 : 10;
     const examQuestions = generateMockExam(count);
 
     if (!isPro && switchTabNow) {
-      this.showToast('Free Demo: 20 Questions unlocked. To get access to full 100-MCQ exams, please buy the Pro version (Rs. 1,299).', 'info');
+      this.showToast('Free Demo: 10 Questions unlocked. To get access to full 100-MCQ exams, please buy the Pro version (Rs. 1,299).', 'info');
     }
 
     this.setupExamSession({
-      title: isPro ? 'PPSC General Ability Full Mock Test (100 MCQs)' : 'PPSC General Ability Free Demo Exam (20 MCQs)',
+      title: isPro ? 'PPSC General Ability Full Mock Test (100 MCQs)' : 'PPSC General Ability Free Demo Exam (10 MCQs)',
       questions: examQuestions,
-      durationMinutes: isPro ? 90 : 20,
+      durationMinutes: isPro ? 90 : 10,
       mode: 'exam',
       switchTabNow: switchTabNow
     });
@@ -309,10 +309,10 @@ const App = {
     const subject = selectedSubject || document.getElementById('practiceSubjectSelect')?.value || 'All';
     let requestedCount = customCount || parseInt(document.getElementById('practiceCountSelect')?.value, 10) || 100;
     
-    // Strict 20 MCQs Demo limit for free demo users
-    let count = isPro ? requestedCount : 20;
-    if (!isPro && requestedCount > 20) {
-      this.showToast('Free Demo: Practicing 20 MCQs. To get access on all 400 MCQs per subject, please buy the Pro version (Rs. 1,299).', 'info');
+    // Strict 10 MCQs Demo limit for free demo users
+    let count = isPro ? requestedCount : 10;
+    if (!isPro && requestedCount > 10) {
+      this.showToast('Free Demo: Practicing 10 MCQs. To get access on all 400 MCQs per subject, please buy the Pro version (Rs. 1,299).', 'info');
     }
 
     const modeType = document.getElementById('practiceModeSelect')?.value || 'instant'; // 'instant' | 'quiz'
@@ -333,7 +333,7 @@ const App = {
     this.setupExamSession({
       title: `${subject === 'All' ? 'Mixed Syllabus' : subject} Practice Session (${shuffled.length} MCQs${!isPro ? ' - Demo' : ''})`,
       questions: shuffled,
-      durationMinutes: Math.ceil(shuffled.length * 0.9), // ~18 mins for 20 Qs, ~90 mins for 100 Qs
+      durationMinutes: Math.ceil(shuffled.length * 0.9), // ~10 mins for 10 Qs, ~90 mins for 100 Qs
       mode: modeType === 'instant' ? 'practice-instant' : 'practice-quiz',
       switchTabNow: true
     });
