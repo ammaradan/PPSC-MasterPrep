@@ -995,6 +995,26 @@ const App = {
       toast.style.transition = 'all 0.3s ease';
       setTimeout(() => toast.remove(), 300);
     }, 3500);
+  },
+
+  // Handle License Activation from Paywall Modal
+  handleLicenseActivation() {
+    const email = document.getElementById('licenseEmailInput')?.value || '';
+    const key = document.getElementById('licenseKeyInput')?.value || '';
+
+    if (typeof PPSC_AUTH !== 'undefined') {
+      const result = PPSC_AUTH.activateLicense(email, key);
+      if (result.success) {
+        this.showToast(result.message, 'success');
+        setTimeout(() => {
+          PPSC_AUTH.closePaywallModal();
+          this.renderQuestionBank();
+          this.renderDashboard();
+        }, 1200);
+      } else {
+        this.showToast(result.message, 'danger');
+      }
+    }
   }
 };
 
