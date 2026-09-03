@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PPSC MasterPrep | Punjab Public Service Commission Exam Portal & Question Bank</title>
+  <meta name="description" content="Ultimate PPSC Exam Preparation Portal & Question Bank covering PMS, Tehsildar, Sub-Inspector, Assistant, and all General Ability one-paper MCQs tests.">
+  
+  <!-- FontAwesome Icons & Google Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="header-container">
+    <div class="brand-logo">
+      <div class="brand-icon">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+      <div>
+        <div class="brand-title">PPSC MasterPrep <span class="brand-badge">2026 Edition</span></div>
+        <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 500;">Punjab Public Service Commission Portal</div>
+      </div>
+    </div>
+
+    <!-- Center Navigation Tabs -->
+    <nav class="nav-tabs" id="mainNav">
+      <button class="nav-tab-btn active" data-tab="dashboard">
+        <i class="fa-solid fa-table-columns"></i> Dashboard
+      </button>
+      <button class="nav-tab-btn" data-tab="mock-exam">
+        <i class="fa-solid fa-stopwatch"></i> Mock Simulator
+      </button>
+      <button class="nav-tab-btn" data-tab="practice">
+        <i class="fa-solid fa-bolt"></i> Subject Practice
+      </button>
+      <button class="nav-tab-btn" data-tab="question-bank">
+        <i class="fa-solid fa-database"></i> Question Bank
+      </button>
+      <button class="nav-tab-btn" data-tab="flashcards">
+        <i class="fa-solid fa-layer-group"></i> Flashcards
+      </button>
+      <button class="nav-tab-btn" data-tab="past-papers">
+        <i class="fa-solid fa-file-lines"></i> Past Papers
+      </button>
+      <button class="nav-tab-btn" data-tab="mistake-book">
+        <i class="fa-solid fa-triangle-exclamation"></i> Mistake Book
+      </button>
+    </nav>
+
+    <!-- Right Header Stats -->
+    <div class="header-actions">
+      <div class="stats-badge-chip">
+        <i class="fa-solid fa-star" style="color: #F59E0B;"></i>
+        <span>Bank: <strong class="num" id="totalQuestionsCount">0</strong> MCQs</span>
+      </div>
+      <div class="stats-badge-chip" id="userBookmarksBadge" style="cursor: pointer;" title="View Bookmarked Questions">
+        <i class="fa-solid fa-bookmark" style="color: var(--accent);"></i>
+        <span>Saved: <strong class="num" id="savedCount">0</strong></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Wrapper -->
+  <main class="main-wrapper">
+
+    <!-- ================================================================= -->
+    <!-- TAB 1: DASHBOARD & SYLLABUS OVERVIEW -->
+    <!-- ================================================================= -->
+    <section class="tab-pane active" id="tab-dashboard">
+      <!-- Hero Banner -->
+      <div class="hero-banner">
+        <div class="hero-content">
+          <h1>Master the <span class="gradient-text">PPSC One-Paper MCQs</span> Examination</h1>
+          <p>
+            Comprehensive, official syllabus-aligned question bank & exam simulation portal for PMS, Tehsildar, Sub-Inspector, Assistant S&GAD, Junior Clerk, and all Punjab competitive exams.
+          </p>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <button class="btn btn-primary" onclick="App.startFullMockExam()">
+              <i class="fa-solid fa-play"></i> Start Full 100-MCQ Mock Exam
+            </button>
+            <button class="btn btn-secondary" onclick="App.switchTab('practice')">
+              <i class="fa-solid fa-book-open"></i> Subject-wise Practice
+            </button>
+            <button class="btn btn-accent" onclick="App.switchTab('flashcards')">
+              <i class="fa-solid fa-bolt-lightning"></i> Flashcard Revision
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-features-grid">
+          <div class="hero-stat-card">
+            <div class="hero-stat-icon" style="background: rgba(16, 185, 129, 0.15); color: var(--primary);">
+              <i class="fa-solid fa-list-check"></i>
+            </div>
+            <div>
+              <div class="stat-val" id="dashTotalMCQs">100+</div>
+              <div class="stat-lbl">Authentic MCQs</div>
+            </div>
+          </div>
+
+          <div class="hero-stat-card">
+            <div class="hero-stat-icon" style="background: rgba(99, 102, 241, 0.15); color: var(--accent);">
+              <i class="fa-solid fa-cubes-stacked"></i>
+            </div>
+            <div>
+              <div class="stat-val">9 Subjects</div>
+              <div class="stat-lbl">Official Syllabus</div>
+            </div>
+          </div>
+
+          <div class="hero-stat-card">
+            <div class="hero-stat-icon" style="background: rgba(245, 158, 11, 0.15); color: var(--warning);">
+              <i class="fa-solid fa-clock-rotate-left"></i>
+            </div>
+            <div>
+              <div class="stat-val">245 Papers</div>
+              <div class="stat-lbl">Past Paper Index</div>
+            </div>
+          </div>
+
+          <div class="hero-stat-card">
+            <div class="hero-stat-icon" style="background: rgba(239, 68, 68, 0.15); color: var(--danger);">
+              <i class="fa-solid fa-percent"></i>
+            </div>
+            <div>
+              <div class="stat-val">-0.25</div>
+              <div class="stat-lbl">Negative Marking Sim</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subject Explorer Section -->
+      <div class="section-title-wrap">
+        <h2 class="section-title"><i class="fa-solid fa-shapes" style="color: var(--primary);"></i> PPSC General Ability Core Subjects</h2>
+        <span style="font-size: 0.88rem; color: var(--text-muted);">Click any subject to launch targeted practice</span>
+      </div>
+
+      <div class="subjects-grid" id="subjectsGrid">
+        <!-- Injected via JavaScript from PPSC_SYLLABUS -->
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- TAB 2: MOCK EXAM SIMULATOR -->
+    <!-- ================================================================= -->
+    <section class="tab-pane" id="tab-mock-exam">
+      <div class="exam-container">
+        <!-- Top status bar -->
+        <div class="exam-top-bar">
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <span style="font-weight: 700; font-size: 1.1rem;" id="examTitle">PPSC General Ability Full Mock Test</span>
+            <span class="tag-badge" id="examTotalBadge">100 Questions</span>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 1.25rem;">
+            <div class="timer-box" id="examTimerBox">
+              <i class="fa-solid fa-stopwatch"></i>
+              <span id="examTimerText">90:00</span>
+            </div>
+            <button class="btn btn-danger" style="padding: 0.5rem 1.1rem; font-size: 0.85rem;" onclick="App.submitExam(true)">
+              <i class="fa-solid fa-paper-plane"></i> Submit Exam
+            </button>
+          </div>
+        </div>
+
+        <!-- Exam Layout: Question Pane + Right Palette -->
+        <div class="exam-body-grid">
+          <!-- Left Question Pane -->
+          <div class="exam-question-pane">
+            <div>
+              <div class="exam-meta-tags">
+                <span class="tag-badge subject" id="examQSubject">Pakistan Studies</span>
+                <span class="tag-badge" id="examQCategory">History</span>
+                <span class="tag-badge" id="examQSource" style="color: var(--info);">PPSC Past Paper</span>
+                <span class="tag-badge" id="examQDifficulty">Medium</span>
+                <button class="btn btn-secondary" id="bookmarkBtn" style="padding: 2px 8px; font-size: 0.75rem; margin-left: auto;" onclick="App.toggleCurrentBookmark()">
+                  <i class="fa-regular fa-bookmark"></i> Bookmark
+                </button>
+              </div>
+
+              <div class="question-text-box" id="examQText">
+                Loading question...
+              </div>
+
+              <div class="options-container" id="examOptionsContainer">
+                <!-- Options injected by JS -->
+              </div>
+
+              <div class="explanation-box" id="examExplanationBox">
+                <div class="explanation-title"><i class="fa-solid fa-circle-info"></i> Detailed Explanation & Source</div>
+                <div id="examExplanationText"></div>
+              </div>
+            </div>
+
+            <!-- Bottom Navigation Bar -->
+            <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.25rem; margin-top: 1.5rem;">
+              <button class="btn btn-secondary" id="examPrevBtn" onclick="App.prevExamQuestion()">
+                <i class="fa-solid fa-arrow-left"></i> Previous
+              </button>
+
+              <div style="display: flex; gap: 0.75rem;">
+                <button class="btn btn-secondary" id="examFlagBtn" style="color: var(--warning);" onclick="App.toggleFlagQuestion()">
+                  <i class="fa-solid fa-flag"></i> Flag for Review
+                </button>
+                <button class="btn btn-accent" id="examExplainBtn" onclick="App.toggleImmediateExplanation()" style="display: none;">
+                  <i class="fa-solid fa-lightbulb"></i> View Answer
+                </button>
+              </div>
+
+              <button class="btn btn-primary" id="examNextBtn" onclick="App.nextExamQuestion()">
+                Next <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Right Palette Grid -->
+          <div class="exam-palette-pane">
+            <div class="palette-title">
+              <span>Question Palette</span>
+              <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;" id="paletteAnsweredCount">0/100 Answered</span>
+            </div>
+
+            <div class="palette-legend">
+              <div><span class="legend-dot" style="background: rgba(16, 185, 129, 0.5);"></span> Answered</div>
+              <div><span class="legend-dot" style="background: rgba(245, 158, 11, 0.5);"></span> Flagged</div>
+              <div><span class="legend-dot" style="background: var(--bg-subtle);"></span> Unanswered</div>
+              <div><span class="legend-dot" style="background: #fff;"></span> Current</div>
+            </div>
+
+            <div class="palette-grid" id="examPaletteGrid">
+              <!-- Number buttons injected by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- TAB 3: SUBJECT PRACTICE -->
+    <!-- ================================================================= -->
+    <section class="tab-pane" id="tab-practice">
+      <div class="section-title-wrap">
+        <h2 class="section-title"><i class="fa-solid fa-bolt" style="color: var(--primary);"></i> Targeted Subject Practice</h2>
+        <span style="font-size: 0.88rem; color: var(--text-muted);">Choose a subject, question count, and test mode</span>
+      </div>
+
+      <div class="filter-bar-card" style="margin-bottom: 2rem;">
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; width: 100%;">
+          <div>
+            <label style="display: block; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px;">Subject</label>
+            <select class="select-custom" id="practiceSubjectSelect">
+              <option value="All">All Subjects (Mixed)</option>
+              <option value="Pakistan Studies">Pakistan Studies</option>
+              <option value="Islamic Studies">Islamic Studies</option>
+              <option value="General Knowledge">General Knowledge</option>
+              <option value="Everyday Science">Everyday Science</option>
+              <option value="Current Affairs">Current Affairs</option>
+              <option value="Computer Science">Computer Science & IT</option>
+              <option value="Mathematics">Basic Mathematics</option>
+              <option value="English">English Grammar & Vocab</option>
+              <option value="Urdu">Urdu Literature & Grammar</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="display: block; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px;">Questions Count</label>
+            <select class="select-custom" id="practiceCountSelect">
+              <option value="100" selected>100 Questions (Recommended)</option>
+              <option value="50">50 Questions</option>
+              <option value="25">25 Questions</option>
+              <option value="200">200 Questions</option>
+              <option value="400">All 400 Subject MCQs</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="display: block; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px;">Mode</label>
+            <select class="select-custom" id="practiceModeSelect">
+              <option value="instant">Instant Feedback (Learn Mode)</option>
+              <option value="quiz">Standard Quiz (Results at End)</option>
+            </select>
+          </div>
+
+          <div style="margin-top: auto;">
+            <button class="btn btn-primary" onclick="App.startSubjectPractice()">
+              <i class="fa-solid fa-circle-play"></i> Start Practice Session
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Subject Launchers Grid -->
+      <div class="subjects-grid" id="practiceSubjectsQuickGrid"></div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- TAB 4: QUESTION BANK EXPLORER -->
+    <!-- ================================================================= -->
+    <section class="tab-pane" id="tab-question-bank">
+      <div class="section-title-wrap">
+        <h2 class="section-title"><i class="fa-solid fa-database" style="color: var(--accent);"></i> PPSC Question Bank Explorer</h2>
+        <div style="display: flex; gap: 0.5rem;">
+          <button class="btn btn-secondary" onclick="App.exportBank('json')">
+            <i class="fa-solid fa-download"></i> Export JSON
+          </button>
+          <button class="btn btn-secondary" onclick="App.exportBank('csv')">
+            <i class="fa-solid fa-file-csv"></i> Export CSV
+          </button>
+          <button class="btn btn-secondary" onclick="window.print()">
+            <i class="fa-solid fa-print"></i> Print
+          </button>
+        </div>
+      </div>
+
+      <!-- Search & Filters -->
+      <div class="filter-bar-card">
+        <div class="search-input-wrap">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="bankSearchInput" placeholder="Search MCQs by question, keyword, concept, or author...">
+        </div>
+
+        <select class="select-custom" id="bankSubjectFilter">
+          <option value="All">All Subjects</option>
+          <option value="Pakistan Studies">Pakistan Studies</option>
+          <option value="Islamic Studies">Islamic Studies</option>
+          <option value="General Knowledge">General Knowledge</option>
+          <option value="Everyday Science">Everyday Science</option>
+          <option value="Current Affairs">Current Affairs</option>
+          <option value="Computer Science">Computer Science</option>
+          <option value="Mathematics">Mathematics</option>
+          <option value="English">English</option>
+          <option value="Urdu">Urdu</option>
+        </select>
+
+        <select class="select-custom" id="bankDifficultyFilter">
+          <option value="All">All Difficulties</option>
+          <option value="Easy">Easy</option>
+          <option value="Medium">Medium</option>
+          <option value="Hard">Hard</option>
+        </select>
+      </div>
+
+      <!-- Questions List -->
+      <div class="q-bank-list" id="qBankList">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- TAB 5: FLASHCARDS STUDIO -->
+    <!-- ================================================================= -->
+    <section class="tab-pane" id="tab-flashcards">
+      <div class="section-title-wrap" style="text-align: center; justify-content: center; flex-direction: column; gap: 0.5rem; margin-bottom: 2rem;">
+        <h2 class="section-title"><i class="fa-solid fa-layer-group" style="color: var(--primary);"></i> Rapid Revision Flashcards</h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">Click the card to reveal the answer and expert explanation</p>
+      </div>
+
+      <div class="flashcard-wrapper">
+        <div class="flashcard-inner" id="flashcardElement" onclick="App.flipFlashcard()">
+          <!-- Front -->
+          <div class="flashcard-front">
+            <div style="display: flex; justify-content: space-between; width: 100%;">
+              <span class="tag-badge subject" id="fcSubject">Subject</span>
+              <span class="tag-badge" id="fcIndex">Card 1 / 50</span>
+            </div>
+
+            <div style="font-size: 1.35rem; font-weight: 700; color: #fff; line-height: 1.5; padding: 1rem 0;" id="fcQuestion">
+              Loading Flashcard...
+            </div>
+
+            <div style="font-size: 0.85rem; color: var(--text-dim);">
+              <i class="fa-solid fa-rotate"></i> Click anywhere to flip
+            </div>
+          </div>
+
+          <!-- Back -->
+          <div class="flashcard-back">
+            <div style="display: flex; justify-content: space-between; width: 100%;">
+              <span class="tag-badge" style="background: rgba(16, 185, 129, 0.2); color: #10B981; border-color: rgba(16, 185, 129, 0.3);">
+                <i class="fa-solid fa-check"></i> Correct Answer
+              </span>
+              <span class="tag-badge" id="fcPaperSource">PPSC Past Paper</span>
+            </div>
+
+            <div style="text-align: center; margin: 1rem 0;">
+              <div style="font-size: 1.45rem; font-weight: 800; color: var(--primary); margin-bottom: 0.75rem;" id="fcAnswer">
+                Answer
+              </div>
+              <p style="font-size: 0.92rem; color: #E2E8F0; line-height: 1.6;" id="fcExplanation">
+                Explanation text here.
+              </p>
+            </div>
+
+            <div style="font-size: 0.85rem; color: var(--text-dim);">
+              <i class="fa-solid fa-rotate"></i> Click to flip back
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard-actions-bar">
+          <button class="btn btn-secondary" onclick="App.prevFlashcard()">
+            <i class="fa-solid fa-chevron-left"></i> Previous
+          </button>
+          <button class="btn btn-primary" onclick="App.nextFlashcard()">
+            Next Card <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- TAB 6: PAST PAPERS DIRECTORY (245 SOLVED PAPERS) -->
+    <!-- ================================================================= -->
+    <section class="tab-pane" id="tab-past-papers">
+      <div class="section-title-wrap">
+        <div>
+          <h2 class="section-title"><i class="fa-solid fa-file-lines" style="color: var(--warning);"></i> PPSC 245 Solved Past Papers Archive</h2>
+          <span style="font-size: 0.88rem; color: var(--text-muted);">Launch direct 100-MCQ solved mock exams by specific department, year, and post</span>
+        </div>
+        <div class="stats-badge-chip">
+          <i class="fa-solid fa-award" style="color: var(--warning);"></i>
+          <span>Total: <strong class="num" id="totalPastPapersCount">245</strong> Papers</span>
+        </div>
+      </div>
+
+      <!-- Past Papers Filters & Search -->
+      <div class="filter-bar-card">
+        <div class="search-input-wrap">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="pastPaperSearchInput" placeholder="Search by post (e.g. Sub-Inspector, Tehsildar, Assistant, Lecturer)...">
+        </div>
+
+        <select class="select-custom" id="pastPaperDeptFilter">
+          <option value="All">All Departments</option>
+          <option value="Services & General Administration (S&GAD)">S&GAD</option>
+          <option value="Punjab Police Department">Punjab Police</option>
+          <option value="Anti-Corruption Establishment (ACE)">Anti-Corruption (ACE)</option>
+          <option value="Board of Revenue & District Administration">Board of Revenue</option>
+          <option value="Higher Education Department (HED)">Higher Education (HED)</option>
+          <option value="School Education Department (SED)">School Education (SED)</option>
+          <option value="Excise, Taxation & Narcotics Control">Excise & Taxation</option>
+          <option value="Finance Department & Treasuries">Finance & Treasuries</option>
+          <option value="Law & Parliamentary Affairs">Law & Prosecution</option>
+          <option value="Labour & Human Resource Department">Labour & Human Resource</option>
+          <option value="Agriculture Department">Agriculture Department</option>
+          <option value="Primary & Secondary Healthcare">Healthcare</option>
+          <option value="Forestry, Wildlife & Fisheries">Wildlife & Forestry</option>
+          <option value="Irrigation Department">Irrigation Department</option>
+        </select>
+
+        <select class="select-custom" id="pastPaperYearFilter">
+          <option value="All">All Years</option>
+          <option value="2026">2026 Papers</option>
+          <option value="2025">2025 Papers</option>
+          <option value="2024">2024 Papers</option>
+          <option value="2023">2023 Papers</option>
+          <option value="2022">2022 Papers</option>
+          <option value="2021">2021 Papers</option>
+          <option value="2020">2020 Papers</option>
+          <option value="2019">2019 Papers</option>
+        </select>
+
+        <select class="select-custom" id="pastPaperBpsFilter">
+          <option value="All">All Scales</option>
+          <option value="BS-17">BS-17 (PMS, AD, Lecturer)</option>
+          <option value="BS-16">BS-16 (Tehsildar, Assistant)</option>
+          <option value="BS-14">BS-14 (Sub-Inspector, Naib Tehsildar)</option>
+          <option value="BS-11">BS-11/12 (Junior Clerk, Operator)</option>
+        </select>
+      </div>
+
+      <div class="subjects-grid" id="pastPapersArchiveGrid">
+        <!-- Rendered from PPSC_SYLLABUS.pastPapersArchive -->
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- TAB 7: MISTAKE BOOK / WEAK POINTS -->
+    <!-- ================================================================= -->
+    <section class="tab-pane" id="tab-mistake-book">
+      <div class="section-title-wrap">
+        <h2 class="section-title"><i class="fa-solid fa-triangle-exclamation" style="color: var(--danger);"></i> Mistake Book & Weak Points</h2>
+        <button class="btn btn-secondary" onclick="App.clearMistakes()">
+          <i class="fa-solid fa-trash"></i> Clear History
+        </button>
+      </div>
+
+      <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+        Every time you answer a question incorrectly during a Mock Exam or Quiz, it is automatically saved here so you can review and practice until mastery.
+      </p>
+
+      <div class="q-bank-list" id="mistakesList">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Result Modal -->
+  <div class="modal-backdrop" id="resultModal">
+    <div class="modal-content">
+      <div style="text-align: center;">
+        <h2 style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; margin-bottom: 0.25rem;">Exam Performance Report</h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem;" id="modalExamSubtitle">PPSC General Ability Simulation</p>
+
+        <div class="score-circle-wrap">
+          <div class="score-num" id="modalFinalScore">0.0</div>
+          <div class="score-total" id="modalMaxScore">/ 100 Marks</div>
+        </div>
+
+        <div style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem;" id="modalPassBadge">
+          PASSED (Target Achieved)
+        </div>
+      </div>
+
+      <div class="result-breakdown-grid">
+        <div class="result-box">
+          <div style="color: var(--success); font-size: 0.8rem; font-weight: 600;">Correct (+1.0)</div>
+          <div class="val" style="color: var(--success);" id="modalCorrectCount">0</div>
+        </div>
+        <div class="result-box">
+          <div style="color: var(--danger); font-size: 0.8rem; font-weight: 600;">Wrong (-0.25)</div>
+          <div class="val" style="color: var(--danger);" id="modalWrongCount">0</div>
+        </div>
+        <div class="result-box">
+          <div style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600;">Skipped</div>
+          <div class="val" style="color: var(--text-muted);" id="modalSkippedCount">0</div>
+        </div>
+      </div>
+
+      <!-- Detailed Breakdown -->
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1.5rem; font-size: 0.88rem;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+          <span style="color: var(--text-muted);">Accuracy Rate:</span>
+          <strong id="modalAccuracy">0%</strong>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+          <span style="color: var(--text-muted);">Negative Penalty:</span>
+          <strong style="color: var(--danger);" id="modalNegativePenalty">-0.00 marks</strong>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <span style="color: var(--text-muted);">Time Taken:</span>
+          <strong id="modalTimeTaken">0 mins</strong>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 1rem; justify-content: center;">
+        <button class="btn btn-secondary" onclick="App.closeResultModal()">
+          <i class="fa-solid fa-xmark"></i> Review Answers
+        </button>
+        <button class="btn btn-primary" onclick="App.switchTab('mistake-book'); App.closeResultModal();">
+          <i class="fa-solid fa-triangle-exclamation"></i> View Mistake Book
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="data/questions_massive.js"></script>
+  <script src="data/questions_pakistan.js"></script>
+  <script src="data/questions_islamic.js"></script>
+  <script src="data/questions_gk.js"></script>
+  <script src="data/questions_science.js"></script>
+  <script src="data/questions_computer.js"></script>
+  <script src="data/questions_math.js"></script>
+  <script src="data/questions_english.js"></script>
+  <script src="data/questions_urdu.js"></script>
+  <script src="data/questions_current.js"></script>
+  <script src="data/questions.js"></script>
+  <script src="data/syllabus.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
