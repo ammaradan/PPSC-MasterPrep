@@ -257,11 +257,18 @@ const App = {
   },
 
   startPastPaperExam(paperTitle) {
-    const questions = generateMockExam(100);
+    const isPro = typeof PPSC_AUTH !== 'undefined' && PPSC_AUTH.state.isPro;
+    const count = isPro ? 100 : 50;
+    const questions = generateMockExam(count);
+    
+    if (!isPro) {
+      this.showToast('Free Demo: 50 Questions loaded. Upgrade to Pro (Rs. 1,299) for full 100-MCQ solved paper.', 'info');
+    }
+
     this.setupExamSession({
-      title: paperTitle,
+      title: `${paperTitle} ${!isPro ? '(50 MCQs Demo)' : ''}`,
       questions: questions,
-      durationMinutes: 90,
+      durationMinutes: isPro ? 90 : 45,
       mode: 'exam',
       switchTabNow: true
     });
@@ -271,19 +278,35 @@ const App = {
   // EXAM & PRACTICE ENGINE
   // ==========================================
   startFullMockExam(switchTabNow = true) {
-    const examQuestions = generateMockExam(100);
+    const isPro = typeof PPSC_AUTH !== 'undefined' && PPSC_AUTH.state.isPro;
+    const count = isPro ? 100 : 50;
+    const examQuestions = generateMockExam(count);
+
+    if (!isPro && switchTabNow) {
+      this.showToast('Free Demo: 50 Questions unlocked. Upgrade to Pro (Rs. 1,299) for full 100-MCQ Mock Exam.', 'info');
+    }
+
     this.setupExamSession({
-      title: 'PPSC General Ability Full Mock Test (100 MCQs)',
+      title: isPro ? 'PPSC General Ability Full Mock Test (100 MCQs)' : 'PPSC General Ability Free Demo Test (50 MCQs)',
       questions: examQuestions,
-      durationMinutes: 90,
+      durationMinutes: isPro ? 90 : 45,
       mode: 'exam',
       switchTabNow: switchTabNow
     });
   },
 
   startSubjectPractice(selectedSubject = null, customCount = null) {
+    const isPro = typeof PPSC_AUTH !== 'undefined' && PPSC_AUTH.state.isPro;
     const subject = selectedSubject || document.getElementById('practiceSubjectSelect')?.value || 'All';
-    const count = customCount || parseInt(document.getElementById('practiceCountSelect')?.value, 10) || 100;
+    let requestedCount = customCount || parseInt(document.getElementById('practiceCountSelect')?.value, 10) || 100;
+    
+    // Strict 50 MCQs Demo limit for non-pro users
+    let count = requestedCount;
+    if (!isPro && count > 50) {
+      count = 50;
+      this.showToast('Free Demo limit: Practicing 50 MCQs. Unlock Pro (Rs. 1,299) for 100+ questions.', 'info');
+    }
+
     const modeType = document.getElementById('practiceModeSelect')?.value || 'instant'; // 'instant' | 'quiz'
 
     let pool = getQuestionsBySubject(subject);
@@ -300,9 +323,9 @@ const App = {
       }));
 
     this.setupExamSession({
-      title: `${subject === 'All' ? 'Mixed Syllabus' : subject} Practice Session (${shuffled.length} MCQs)`,
+      title: `${subject === 'All' ? 'Mixed Syllabus' : subject} Practice Session (${shuffled.length} MCQs${!isPro && requestedCount > 50 ? ' - Demo' : ''})`,
       questions: shuffled,
-      durationMinutes: Math.ceil(shuffled.length * 0.9), // ~90 mins for 100 questions
+      durationMinutes: Math.ceil(shuffled.length * 0.9), // ~45 mins for 50 Qs, ~90 mins for 100 Qs
       mode: modeType === 'instant' ? 'practice-instant' : 'practice-quiz',
       switchTabNow: true
     });
@@ -720,6 +743,12 @@ const App = {
   },
 
   changeBankPage(delta) {
+    const isPro = typeof PPSC_AUTH !== 'undefined' && PPSC_AUTH.state.isPro;
+    if (!isPro && this.stateBank.page + delta > 1) {
+      if (typeof PPSC_AUTH !== 'undefined') PPSC_AUTH.openPaywallModal('bank');
+      this.showToast('Free Demo limit (50 MCQs) reached. Unlock Pro (Rs. 1,299) to browse all 3,600+ questions!', 'danger');
+      return;
+    }
     this.stateBank.page += delta;
     this.renderQuestionBank(false);
     window.scrollTo({ top: 400, behavior: 'smooth' });
@@ -911,6 +940,13 @@ const App = {
   },
 
   nextFlashcard() {
+    const isPro = typeof PPSC_AUTH !== 'undefined' && PPSC_AUTH.state.isPro;
+    if (!isPro && this.state.flashcards.currentIndex >= 49) {
+      if (typeof PPSC_AUTH !== 'undefined') PPSC_AUTH.openPaywallModal('flashcards');
+      this.showToast('Free Demo limit (50 Flashcards) reached. Unlock Pro to browse all flashcards!', 'danger');
+      return;
+    }
+
     if (this.state.flashcards.currentIndex < this.state.flashcards.items.length - 1) {
       this.state.flashcards.currentIndex++;
     } else {
@@ -932,6 +968,13 @@ const App = {
   // EXPORT TOOLS
   // ==========================================
   exportBank(format = 'json') {
+    const isPro = typeof PPSC_AUTH !== 'undefined' && PPSC_AUTH.state.isPro;
+    if (!isPro) {
+      if (typeof PPSC_AUTH !== 'undefined') PPSC_AUTH.openPaywallModal('export');
+      this.showToast('Exporting the complete 3,600+ question bank is reserved for Pro members.', 'danger');
+      return;
+    }
+
     const data = EXPANDED_PPSC_QUESTIONS;
     let fileContent = '';
     let fileName = `PPSC_Question_Bank_${Date.now()}.${format}`;
