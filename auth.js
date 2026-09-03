@@ -114,7 +114,7 @@ const PPSC_AUTH = {
       } else {
         headerChip.innerHTML = `
           <button class="btn btn-warning" style="padding: 5px 12px; font-size: 0.8rem; font-weight: 700; border-radius: 50px; box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);" onclick="PPSC_AUTH.openPaywallModal()">
-            <i class="fa-solid fa-gem" style="color: #fff;"></i> Unlock Pro (Rs. 999)
+            <i class="fa-solid fa-gem" style="color: #fff;"></i> Unlock Pro (Rs. 1,299)
           </button>
         `;
       }
