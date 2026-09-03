@@ -5,6 +5,7 @@ let EXPANDED_PPSC_QUESTIONS = [];
 
 if (typeof window !== 'undefined') {
   EXPANDED_PPSC_QUESTIONS = [
+    ...(typeof PPSC_CATALOG_QUESTIONS !== 'undefined' && Array.isArray(PPSC_CATALOG_QUESTIONS) ? PPSC_CATALOG_QUESTIONS : []),
     ...(typeof MASSIVE_PPSC_DATA !== 'undefined' && Array.isArray(MASSIVE_PPSC_DATA) ? MASSIVE_PPSC_DATA : []),
     ...(typeof PAKISTAN_QUESTIONS !== 'undefined' ? PAKISTAN_QUESTIONS : []),
     ...(typeof ISLAMIC_QUESTIONS !== 'undefined' ? ISLAMIC_QUESTIONS : []),
@@ -18,8 +19,11 @@ if (typeof window !== 'undefined') {
   ];
 } else if (typeof module !== 'undefined') {
   try {
+    const catalog = require('./questions_catalog.js');
     const massive = require('./questions_massive.js');
-    EXPANDED_PPSC_QUESTIONS = Array.isArray(massive) ? massive : [];
+    const catList = catalog && catalog.PPSC_CATALOG_QUESTIONS ? catalog.PPSC_CATALOG_QUESTIONS : [];
+    const masList = Array.isArray(massive) ? massive : [];
+    EXPANDED_PPSC_QUESTIONS = [...catList, ...masList];
   } catch(e) {}
 }
 
