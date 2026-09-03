@@ -131,6 +131,9 @@ body {
   padding: 2px 8px;
   border-radius: 20px;
   margin-left: 6px;
+  white-space: nowrap;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .nav-tabs {

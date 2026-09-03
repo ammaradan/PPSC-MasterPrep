@@ -87,6 +87,15 @@ const App = {
   },
 
   switchTab(tabId) {
+    const isPro = typeof PPSC_AUTH !== 'undefined' && PPSC_AUTH.state.isPro;
+
+    // Lock Flashcards tab completely without payment
+    if (tabId === 'flashcards' && !isPro) {
+      if (typeof PPSC_AUTH !== 'undefined') PPSC_AUTH.openPaywallModal('flashcards');
+      this.showToast('Flashcards are locked in Free Demo. To get access, please buy the Pro version (Rs. 1,299).', 'danger');
+      return;
+    }
+
     this.state.activeTab = tabId;
 
     // Update Nav
