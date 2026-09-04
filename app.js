@@ -111,9 +111,17 @@ const App = {
     // Scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // If switching to mock exam and questions not loaded, start immediately
-    if (tabId === 'mock-exam' && (!this.state.exam.questions || this.state.exam.questions.length === 0)) {
-      this.startFullMockExam(true);
+    // If switching to mock exam
+    if (tabId === 'mock-exam') {
+      if (!isPro) {
+        if (!this.state.exam.questions || this.state.exam.questions.length === 0) {
+          this.startFullMockExam(true);
+        } else {
+          this.showDemoNoticeModal(null);
+        }
+      } else if (!this.state.exam.questions || this.state.exam.questions.length === 0) {
+        this.startFullMockExam(true);
+      }
     }
 
     // Refresh context if needed
