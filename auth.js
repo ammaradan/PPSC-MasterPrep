@@ -16,13 +16,6 @@ const PPSC_AUTH = {
     this.initDeviceId();
     this.loadLicense();
     this.updateUI();
-
-    // Auto-open Welcome Buy Pro modal on first visit for non-pro users
-    if (!this.state.isPro) {
-      setTimeout(() => {
-        this.openPaywallModal('welcome');
-      }, 700);
-    }
   },
 
   initDeviceId() {
