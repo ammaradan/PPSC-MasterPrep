@@ -348,23 +348,55 @@ const App = {
     }));
   },
 
+  pendingExamSession: null,
+
+  showDemoNoticeModal(sessionConfig) {
+    this.pendingExamSession = sessionConfig;
+    const modal = document.getElementById('demoNoticeModal');
+    if (modal) modal.classList.add('active');
+  },
+
+  closeDemoNoticeAndStart() {
+    const modal = document.getElementById('demoNoticeModal');
+    if (modal) modal.classList.remove('active');
+    if (this.pendingExamSession) {
+      this.setupExamSession(this.pendingExamSession);
+      this.pendingExamSession = null;
+    }
+  },
+
+  closeDemoNotice() {
+    const modal = document.getElementById('demoNoticeModal');
+    if (modal) modal.classList.remove('active');
+  },
+
+  openProFromDemoNotice() {
+    this.closeDemoNotice();
+    if (typeof PPSC_AUTH !== 'undefined') {
+      PPSC_AUTH.openPaywallModal('exam-limit');
+    }
+  },
+
   startFullMockExam(switchTabNow = true) {
     const isPro = typeof PPSC_AUTH !== 'undefined' && PPSC_AUTH.state.isPro;
     const count = isPro ? 100 : 10;
     const pool = typeof EXPANDED_PPSC_QUESTIONS !== 'undefined' && EXPANDED_PPSC_QUESTIONS.length > 0 ? EXPANDED_PPSC_QUESTIONS : (typeof PPSC_UNIFIED_QUESTIONS !== 'undefined' ? PPSC_UNIFIED_QUESTIONS : []);
     const examQuestions = this.getSmartRandomQuestions(pool, count);
 
-    if (!isPro && switchTabNow) {
-      this.showToast('Free Demo: 10 Questions unlocked. To get access to full 100-MCQ exams, please buy the Pro version (Rs. 1,299).', 'info');
-    }
-
-    this.setupExamSession({
+    const sessionConfig = {
       title: isPro ? 'PPSC General Ability Full Mock Test (100 MCQs)' : 'PPSC General Ability Free Demo Exam (10 MCQs)',
       questions: examQuestions,
       durationMinutes: isPro ? 90 : 10,
       mode: 'exam',
       switchTabNow: switchTabNow
-    });
+    };
+
+    if (!isPro && switchTabNow) {
+      this.showDemoNoticeModal(sessionConfig);
+      return;
+    }
+
+    this.setupExamSession(sessionConfig);
   },
 
   startSubjectPractice(selectedSubject = null, customCount = null) {
@@ -374,10 +406,6 @@ const App = {
     
     // Strict 10 MCQs Demo limit for free demo users
     let count = isPro ? requestedCount : 10;
-    if (!isPro && requestedCount > 10) {
-      this.showToast('Free Demo: Practicing 10 MCQs. To get access on all 400 MCQs per subject, please buy the Pro version (Rs. 1,299).', 'info');
-    }
-
     const modeType = document.getElementById('practiceModeSelect')?.value || 'instant'; // 'instant' | 'quiz'
 
     let pool = getQuestionsBySubject(subject);
@@ -386,13 +414,20 @@ const App = {
     // Smart non-repeating random selection
     const shuffled = this.getSmartRandomQuestions(pool, count);
 
-    this.setupExamSession({
+    const sessionConfig = {
       title: `${subject === 'All' ? 'Mixed Syllabus' : subject} Practice Session (${shuffled.length} MCQs${!isPro ? ' - Demo' : ''})`,
       questions: shuffled,
       durationMinutes: Math.ceil(shuffled.length * 0.9), // ~10 mins for 10 Qs, ~90 mins for 100 Qs
       mode: modeType === 'instant' ? 'practice-instant' : 'practice-quiz',
       switchTabNow: true
-    });
+    };
+
+    if (!isPro) {
+      this.showDemoNoticeModal(sessionConfig);
+      return;
+    }
+
+    this.setupExamSession(sessionConfig);
   },
 
   setupExamSession({ title, questions, durationMinutes, mode, switchTabNow = true }) {

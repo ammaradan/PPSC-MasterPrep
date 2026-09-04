@@ -558,6 +558,38 @@
     </div>
   </div>
 
+  <!-- Demo Notice Modal (Shown when Free Student starts Test/Exam) -->
+  <div class="modal-backdrop" id="demoNoticeModal">
+    <div class="modal-content" style="max-width: 520px; text-align: center;">
+      <div style="width: 56px; height: 56px; margin: 0 auto 1rem; border-radius: 16px; background: rgba(16, 185, 129, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: var(--primary);">
+        <i class="fa-solid fa-gift"></i>
+      </div>
+      
+      <h2 style="font-family: 'Outfit', sans-serif; font-size: 1.5rem; margin-bottom: 0.35rem;">Free Demo Mode (10 MCQs)</h2>
+      <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.25rem;">PPSC General Ability Exam Simulation</p>
+
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.2rem; margin-bottom: 1.5rem; text-align: left; font-size: 0.9rem; line-height: 1.6;">
+        <p style="margin-bottom: 0.75rem; color: #E2E8F0;">
+          Only <strong>10 questions</strong> are available for free in this Demo Test.
+        </p>
+        <div style="display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.84rem; color: var(--text-muted);">
+          <div><i class="fa-solid fa-circle-check" style="color: var(--primary); margin-right: 6px;"></i> First 10 questions free with instant scoring</div>
+          <div><i class="fa-solid fa-circle-check" style="color: var(--primary); margin-right: 6px;"></i> Negative marking (-0.25) simulation included</div>
+          <div><i class="fa-solid fa-crown" style="color: var(--warning); margin-right: 6px;"></i> Upgrade to Pro (Rs. 1,299) to unlock full 100-MCQ exams & all 536 past papers</div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 0.75rem; justify-content: center; flex-direction: column;">
+        <button class="btn btn-primary" onclick="App.closeDemoNoticeAndStart()" style="width: 100%; justify-content: center; padding: 12px; font-weight: 700; font-size: 0.95rem;">
+          <i class="fa-solid fa-play"></i> Start 10-MCQ Free Demo
+        </button>
+        <button class="btn btn-secondary" onclick="App.openProFromDemoNotice()" style="width: 100%; justify-content: center; padding: 10px; font-size: 0.88rem; font-weight: 600; color: #FDE68A; border-color: rgba(245, 158, 11, 0.4);">
+          <i class="fa-solid fa-crown" style="color: var(--warning);"></i> Upgrade to Pro (Rs. 1,299)
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Paywall / Monetization Modal -->
   <div class="modal-backdrop" id="paywallModal">
     <div class="modal-content" style="max-width: 650px;">
