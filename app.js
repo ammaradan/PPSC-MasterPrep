@@ -126,9 +126,12 @@ const App = {
     const savedCountEl = document.getElementById('savedCount');
     const dashTotalEl = document.getElementById('dashTotalMCQs');
 
-    const total = typeof EXPANDED_PPSC_QUESTIONS !== 'undefined' ? EXPANDED_PPSC_QUESTIONS.length : 0;
-    if (totalCountEl) totalCountEl.textContent = total;
-    if (dashTotalEl) dashTotalEl.textContent = total + '+';
+    const total = (typeof EXPANDED_PPSC_QUESTIONS !== 'undefined' && EXPANDED_PPSC_QUESTIONS.length > 0)
+      ? EXPANDED_PPSC_QUESTIONS.length 
+      : (typeof PPSC_UNIFIED_QUESTIONS !== 'undefined' ? PPSC_UNIFIED_QUESTIONS.length : 0);
+
+    if (totalCountEl) totalCountEl.textContent = total.toLocaleString();
+    if (dashTotalEl) dashTotalEl.textContent = total.toLocaleString();
     if (savedCountEl) savedCountEl.textContent = this.state.bookmarks.length;
   },
 
@@ -149,11 +152,16 @@ const App = {
     const practiceGrid = document.getElementById('practiceSubjectsQuickGrid');
     if (!grid || typeof PPSC_SYLLABUS === 'undefined') return;
 
+    const subjects = PPSC_SYLLABUS.generalAbility.subjects || PPSC_SYLLABUS.generalAbility.sections || [];
+    const pool = (typeof EXPANDED_PPSC_QUESTIONS !== 'undefined' && EXPANDED_PPSC_QUESTIONS.length > 0)
+      ? EXPANDED_PPSC_QUESTIONS 
+      : (typeof PPSC_UNIFIED_QUESTIONS !== 'undefined' ? PPSC_UNIFIED_QUESTIONS : []);
+
     let html = '';
     let practiceHtml = '';
 
-    PPSC_SYLLABUS.generalAbility.subjects.forEach(subj => {
-      const qCount = EXPANDED_PPSC_QUESTIONS.filter(q => this.matchesSubject(q.subject, subj.name)).length;
+    subjects.forEach(subj => {
+      const qCount = pool.filter(q => this.matchesSubject(q.subject, subj.name)).length;
       
       html += `
         <div class="subject-card" onclick="App.startSubjectDirect('${subj.name}')">
@@ -166,7 +174,7 @@ const App = {
           <div class="subject-name">${subj.name}</div>
           <div class="subject-desc">${subj.topics[0]} & more...</div>
           <div class="subject-card-footer">
-            <span><i class="fa-solid fa-layer-group"></i> ${qCount} Questions</span>
+            <span><i class="fa-solid fa-layer-group"></i> ${qCount.toLocaleString()} MCQs</span>
             <span style="color: var(--primary); font-weight: 600;">Practice <i class="fa-solid fa-arrow-right"></i></span>
           </div>
         </div>
@@ -178,7 +186,7 @@ const App = {
             <div class="subject-badge-icon" style="background: ${subj.color}20; color: ${subj.color};">
               <i class="fa-solid ${subj.icon}"></i>
             </div>
-            <span class="subject-weight-tag">${qCount} MCQs</span>
+            <span class="subject-weight-tag">${qCount.toLocaleString()} MCQs</span>
           </div>
           <div class="subject-name">${subj.name}</div>
           <div class="subject-card-footer" style="margin-top: 1rem;">
@@ -269,7 +277,7 @@ const App = {
     const isPro = typeof PPSC_AUTH !== 'undefined' && PPSC_AUTH.state.isPro;
     if (!isPro) {
       if (typeof PPSC_AUTH !== 'undefined') PPSC_AUTH.openPaywallModal('past-papers');
-      this.showToast('To get access to all 245 solved past papers, please buy the Pro version (Rs. 1,299).', 'danger');
+      this.showToast('To get access to all 536 solved past papers, please buy the Pro version (Rs. 1,299).', 'danger');
       return;
     }
 

@@ -5391,7 +5391,7 @@ const PPSC_SYLLABUS = {
     durationMinutes: 90,
     negativeMarkingPenalty: 0.25,
     passMarks: 40,
-    sections: [
+    subjects: [
       {
         id: "gk",
         name: "General Knowledge",
@@ -5522,6 +5522,8 @@ const PPSC_SYLLABUS = {
   },
   pastPapersArchive: VERIFIED_PAST_PAPERS
 };
+
+PPSC_SYLLABUS.generalAbility.sections = PPSC_SYLLABUS.generalAbility.subjects;
 
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
