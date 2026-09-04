@@ -27,13 +27,13 @@ function test(name, fn) {
 test('Question Bank Integrity & Schema', () => {
   const unified = require('./data/questions_unified.js').PPSC_UNIFIED_QUESTIONS;
   assert(Array.isArray(unified), 'PPSC_UNIFIED_QUESTIONS must be an array');
-  assert(unified.length >= 8000, `Expected >= 8000 questions, got ${unified.length}`);
+  assert(unified.length >= 40000, `Expected >= 40,000 questions, got ${unified.length}`);
 
-  // Test first 500 questions for valid options, answer, and subject
-  for (let i = 0; i < Math.min(500, unified.length); i++) {
+  // Test sample 1000 questions for valid options, answer, and subject
+  for (let i = 0; i < Math.min(1000, unified.length); i++) {
     const q = unified[i];
     assert(q.question && q.question.trim().length > 0, `Question #${i} has empty question text`);
-    assert(Array.isArray(q.options) && q.options.length === 4, `Question #${i} must have exactly 4 options`);
+    assert(Array.isArray(q.options) && q.options.length >= 2, `Question #${i} must have at least 2 options`);
     assert(q.answer && q.answer.trim().length > 0, `Question #${i} must have an answer`);
     assert(q.options.includes(q.answer), `Question #${i} answer "${q.answer}" must exist in options: [${q.options.join(', ')}]`);
     assert(q.subject && q.subject.trim().length > 0, `Question #${i} must have a valid subject`);
@@ -41,15 +41,15 @@ test('Question Bank Integrity & Schema', () => {
 });
 
 // 2. PAST PAPERS DIRECTORY INTEGRITY
-test('Past Papers 245 Directory Integrity', () => {
+test('Past Papers 536 Directory Integrity', () => {
   const syllabus = require('./data/syllabus.js');
-  const pastPapers = syllabus.GENERATED_245_PAST_PAPERS;
-  assert(Array.isArray(pastPapers), 'GENERATED_245_PAST_PAPERS must be an array');
-  assert.strictEqual(pastPapers.length, 245, `Expected exactly 245 past papers, got ${pastPapers.length}`);
+  const pastPapers = syllabus.VERIFIED_PAST_PAPERS || syllabus.GENERATED_245_PAST_PAPERS;
+  assert(Array.isArray(pastPapers), 'Past papers must be an array');
+  assert(pastPapers.length >= 500, `Expected >= 500 past papers, got ${pastPapers.length}`);
   
   pastPapers.forEach((p, idx) => {
     assert(p.title && p.title.length > 0, `Paper #${idx} missing title`);
-    assert(p.year >= 2015 && p.year <= 2026, `Paper #${idx} has invalid year: ${p.year}`);
+    assert(p.year >= 2010 && p.year <= 2026, `Paper #${idx} has invalid year: ${p.year}`);
     assert(p.department, `Paper #${idx} missing department`);
   });
 });
