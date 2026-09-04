@@ -164,13 +164,13 @@ const PPSC_AUTH = {
     const modal = document.getElementById('paywallModal');
     const alertBox = document.getElementById('paywallContextAlert');
     
-    let msg = "To get full access to all 8000+ MCQs, 245 Solved Past Papers, and 90-min Mock Simulators, please buy the Pro version.";
+    let msg = "To get full access to all 45,000+ MCQs, 536 Solved Past Papers, and 90-min Mock Simulators, please buy the Pro version.";
     if (context === 'welcome') {
       msg = "👋 <strong>Welcome to PPSC MasterPrep!</strong> Get full lifetime access for <strong>One Device on One Gmail</strong> for just Rs. 1,299. You can close this popup to try the 10-MCQ demo.";
     } else if (context === 'bank') {
       msg = "🔒 <strong>Question Bank Locked in Demo:</strong> To browse and search all solved questions, please buy the Pro version.";
     } else if (context === 'past-papers') {
-      msg = "🔒 <strong>Past Papers Locked in Demo:</strong> To launch and practice any of the 245 solved past papers, please buy the Pro version.";
+      msg = "🔒 <strong>Past Papers Locked in Demo:</strong> To launch and practice any of the 536 solved past papers, please buy the Pro version.";
     } else if (context === 'flashcards') {
       msg = "🔒 <strong>Flashcards Locked in Demo:</strong> To access all revision flashcards, please buy the Pro version.";
     } else if (context === 'exam-limit') {
