@@ -1,11 +1,11 @@
-// Comprehensive System & Function Test Suite for PPSC MasterPrep
+// Comprehensive 5-Point System & Function Test Suite for PPSC MasterPrep
 
 const assert = require('assert');
 const path = require('path');
 const fs = require('fs');
 
 console.log('====================================================');
-console.log('🧪 RUNNING COMPREHENSIVE PPSC MASTERPREP TEST SUITE');
+console.log('🧪 RUNNING COMPREHENSIVE PPSC MASTERPREP 5-POINT TEST SUITE');
 console.log('====================================================\n');
 
 let passedTests = 0;
@@ -23,14 +23,28 @@ function test(name, fn) {
   }
 }
 
-// 1. DATA INTEGRITY TESTS
-test('Question Bank Integrity & Schema', () => {
+// 1. DEDUPLICATION & ZERO DUPLICATES TEST
+test('Checkpoint 1: Zero Duplicates & 100% Normalized Uniqueness', () => {
   const unified = require('./data/questions_unified.js').PPSC_UNIFIED_QUESTIONS;
   assert(Array.isArray(unified), 'PPSC_UNIFIED_QUESTIONS must be an array');
+  const seenNorm = new Set();
+  
+  for (let i = 0; i < unified.length; i++) {
+    const q = unified[i];
+    const norm = q.question.toLowerCase().replace(/[^a-z0-9\u0600-\u06FF]/g, '').trim();
+    assert(!seenNorm.has(norm), `Duplicate found at index ${i}: "${q.question}"`);
+    seenNorm.add(norm);
+  }
+  assert.strictEqual(seenNorm.size, unified.length, 'Question bank contains duplicate entries');
+});
+
+// 2. DATA INTEGRITY & SCHEMA TEST
+test('Checkpoint 2: Question Bank Schema, Options & Valid Correct Answer', () => {
+  const unified = require('./data/questions_unified.js').PPSC_UNIFIED_QUESTIONS;
   assert(unified.length >= 40000, `Expected >= 40,000 questions, got ${unified.length}`);
 
-  // Test sample 1000 questions for valid options, answer, and subject
-  for (let i = 0; i < Math.min(1000, unified.length); i++) {
+  // Test sample 2000 questions for valid options, answer, and subject
+  for (let i = 0; i < Math.min(2000, unified.length); i++) {
     const q = unified[i];
     assert(q.question && q.question.trim().length > 0, `Question #${i} has empty question text`);
     assert(Array.isArray(q.options) && q.options.length >= 2, `Question #${i} must have at least 2 options`);
@@ -40,8 +54,8 @@ test('Question Bank Integrity & Schema', () => {
   }
 });
 
-// 2. PAST PAPERS DIRECTORY INTEGRITY
-test('Past Papers 536 Directory Integrity', () => {
+// 3. PAST PAPERS DIRECTORY INTEGRITY
+test('Checkpoint 3: Past Papers 536 Directory Integrity', () => {
   const syllabus = require('./data/syllabus.js');
   const pastPapers = syllabus.VERIFIED_PAST_PAPERS || syllabus.GENERATED_245_PAST_PAPERS;
   assert(Array.isArray(pastPapers), 'Past papers must be an array');
@@ -54,8 +68,8 @@ test('Past Papers 536 Directory Integrity', () => {
   });
 });
 
-// 3. 1-DEVICE HARDWARE LOCK & SECURITY TESTS
-test('1-Device Cryptographic Licensing & Hardware Lock', () => {
+// 4. 1-DEVICE HARDWARE LOCK & SECURITY TESTS
+test('Checkpoint 4: 1-Device Cryptographic Licensing & Hardware Lock', () => {
   // Mock localStorage
   const store = {};
   global.localStorage = {
@@ -100,8 +114,8 @@ test('1-Device Cryptographic Licensing & Hardware Lock', () => {
   assert.strictEqual(fakeRes.success, false, 'Fake key activation must fail');
 });
 
-// 4. SMART NON-REPEATING QUESTION SHUFFLER & PRACTICE TESTS
-test('Smart Dynamic Non-Repeating Shuffler', () => {
+// 5. SMART NON-REPEATING QUESTION SHUFFLER & PRACTICE TESTS
+test('Checkpoint 5: Smart Dynamic Non-Repeating Shuffler', () => {
   const unified = require('./data/questions_unified.js').PPSC_UNIFIED_QUESTIONS;
 
   // Simulate mock app getSmartRandomQuestions logic
@@ -145,14 +159,14 @@ test('Smart Dynamic Non-Repeating Shuffler', () => {
     }));
   };
 
-  // Run 3 consecutive 10-question practice sessions
-  const session1 = getSmartRandomQuestions(unified, 10);
-  const session2 = getSmartRandomQuestions(unified, 10);
-  const session3 = getSmartRandomQuestions(unified, 10);
+  // Run 3 consecutive 20-question practice sessions
+  const session1 = getSmartRandomQuestions(unified, 20);
+  const session2 = getSmartRandomQuestions(unified, 20);
+  const session3 = getSmartRandomQuestions(unified, 20);
 
-  assert.strictEqual(session1.length, 10, 'Session 1 must have 10 questions');
-  assert.strictEqual(session2.length, 10, 'Session 2 must have 10 questions');
-  assert.strictEqual(session3.length, 10, 'Session 3 must have 10 questions');
+  assert.strictEqual(session1.length, 20, 'Session 1 must have 20 questions');
+  assert.strictEqual(session2.length, 20, 'Session 2 must have 20 questions');
+  assert.strictEqual(session3.length, 20, 'Session 3 must have 20 questions');
 
   // Ensure no overlap between session 1 and session 2
   const ids1 = new Set(session1.map(q => q.id));
